@@ -1,0 +1,43 @@
+:root {
+    color-scheme: light dark;
+    --achtergrond: #ffffff;
+    --tekst: #1a1a1a;
+    --accent: #7a1f3d;
+    --rand: #e0e0e0;
+}
+@media (prefers-color-scheme: dark) {
+    :root {
+        --achtergrond: #16141a;
+        --tekst: #e8e6e3;
+        --accent: #e0a8bb;
+        --rand: #333;
+    }
+}
+body {
+    background: var(--achtergrond);
+    color: var(--tekst);
+    font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+}
+.pagina {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem;
+}
+h1 {
+    font-size: 1.6rem;
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 0.5rem;
+}
+a {
+    color: var(--accent);
+}
+hr {
+    border: none;
+    border-top: 1px solid var(--rand);
+    margin: 2rem 0;
+}
+li {
+    margin-bottom: 0.5rem;
+}
