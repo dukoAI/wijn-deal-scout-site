@@ -1,43 +1,255 @@
 :root {
     color-scheme: light dark;
-    --achtergrond: #ffffff;
-    --tekst: #1a1a1a;
-    --accent: #7a1f3d;
-    --rand: #e0e0e0;
+
+    --bg: #faf6f6;
+    --surface: #ffffff;
+    --text: #241318;
+    --text-muted: #7a6169;
+    --accent: #6d1b34;
+    --accent-strong: #4a1224;
+    --gold: #a9793f;
+    --border: #e8dcdd;
+
+    --serif: Georgia, "Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+    --badge-bg: rgba(109, 27, 52, 0.08);
 }
+
 @media (prefers-color-scheme: dark) {
     :root {
-        --achtergrond: #16141a;
-        --tekst: #e8e6e3;
-        --accent: #e0a8bb;
-        --rand: #333;
+        --bg: #170f13;
+        --surface: #221722;
+        --text: #f2e9ea;
+        --text-muted: #b39aa1;
+        --accent: #e0a2b2;
+        --accent-strong: #eebbc8;
+        --gold: #d4a054;
+        --border: #3a2830;
+        --badge-bg: rgba(224, 162, 178, 0.12);
     }
 }
+
+* {
+    box-sizing: border-box;
+}
+
 body {
-    background: var(--achtergrond);
-    color: var(--tekst);
-    font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
-    line-height: 1.6;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    line-height: 1.65;
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+}
+
+.pagina {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem 5rem;
+}
+
+/* Site header / wordmark */
+.site-header {
+    margin-bottom: 3rem;
+}
+
+.site-header h1 {
+    font-family: var(--serif);
+    font-size: 2.1rem;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    margin: 0 0 0.35rem;
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.site-tagline {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+/* Edition cards (index page) */
+.edities-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+}
+
+.editie-kaart {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: 2px solid var(--accent);
+    border-radius: 3px;
+    padding: 1.15rem 1.4rem;
+    text-decoration: none;
+    color: var(--text);
+    transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.editie-kaart:hover {
+    border-color: var(--accent);
+    transform: translateY(-1px);
+}
+
+.editie-datum {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+}
+
+.editie-link {
+    font-size: 0.8rem;
+    color: var(--gold);
+    white-space: nowrap;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Generic content typography */
+h1 {
+    font-family: var(--serif);
+    font-size: 1.7rem;
+    font-weight: 400;
     margin: 0;
 }
-.pagina {
-    max-width: 700px;
-    margin: 0 auto;
-    padding: 2.5rem 1.5rem;
+
+p {
+    margin: 0 0 1.1rem;
 }
-h1 {
-    font-size: 1.6rem;
-    border-bottom: 2px solid var(--accent);
-    padding-bottom: 0.5rem;
-}
+
 a {
     color: var(--accent);
 }
+
+a:hover {
+    color: var(--accent-strong);
+}
+
 hr {
     border: none;
-    border-top: 1px solid var(--rand);
-    margin: 2rem 0;
+    border-top: 1px solid var(--border);
+    margin: 2.5rem 0;
 }
+
 li {
     margin-bottom: 0.5rem;
+}
+
+/* Edition page header */
+.editie-header {
+    margin-bottom: 2.5rem;
+}
+
+.editie-eyebrow {
+    font-size: 0.8rem;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin: 0 0 0.5rem;
+}
+
+.editie-header h1 {
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 0.6rem;
+}
+
+/* Top-3 kaarten */
+.top-wijnen {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.wijn-kaart {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 1.75rem;
+}
+
+.wijn-kaart-kop {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 0.5rem;
+}
+
+.wijn-kaart-kop:empty {
+    display: none;
+}
+
+.score-badge {
+    font-family: var(--serif);
+    font-size: 0.95rem;
+    color: var(--accent);
+    background: var(--badge-bg);
+    border: 1px solid var(--accent);
+    border-radius: 999px;
+    padding: 0.15rem 0.75rem;
+    white-space: nowrap;
+}
+
+.wijn-tekst p:last-child {
+    margin-bottom: 0;
+}
+
+.bestel-link {
+    display: inline-block;
+    margin-top: 0.75rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--accent);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.bestel-link:hover {
+    color: var(--accent-strong);
+}
+
+/* Overig-sectie */
+.overig-sectie {
+    margin-top: 3rem;
+}
+
+.overig-sectie h2 {
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: var(--text);
+    margin: 0 0 0.5rem;
+}
+
+.overig-lijst {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.overig-lijst li {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 0;
+    font-size: 0.92rem;
+}
+
+.overig-lijst li:last-child {
+    border-bottom: none;
+}
+
+.score-pill {
+    font-family: var(--serif);
+    font-size: 0.8rem;
+    color: var(--gold);
+    flex-shrink: 0;
 }
