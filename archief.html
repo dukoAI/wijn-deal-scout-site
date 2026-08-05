@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wijn Deal Scout - archief</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=Karla:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script>
+(function () {
+  var opgeslagen = localStorage.getItem('wds-theme');
+  var thema = opgeslagen || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  document.documentElement.setAttribute('data-theme', thema);
+})();
+</script>
+</head>
+<body>
+<div class="pagina">
+<header class="site-header">
+<a class="wordmark" href="index.html">Wijn Deal Scout</a>
+<div class="header-rij">
+<p class="site-tagline">Archief van eerdere edities</p>
+<button class="theme-toggle" onclick="wdsWisselThema()" aria-label="Wissel licht/donker" type="button">
+<span class="theme-toggle-dot"></span>
+</button>
+</div>
+</header>
+<hr>
+<div class="edities-grid">
+<a class="editie-kaart" href="editie-2026-08-05.html">
+<span class="editie-datum">5 augustus 2026</span>
+<span class="editie-link">Bekijk deze editie &rarr;</span>
+</a><a class="editie-kaart" href="editie-2026-07-30.html">
+<span class="editie-datum">30 juli 2026</span>
+<span class="editie-link">Bekijk deze editie &rarr;</span>
+</a><a class="editie-kaart" href="editie-2026-07-28.html">
+<span class="editie-datum">28 juli 2026</span>
+<span class="editie-link">Bekijk deze editie &rarr;</span>
+</a>
+</div>
+<div class="nieuwsbrief-vak">
+<div class="nieuwsbrief-tekst">Elke vrijdag in je inbox</div>
+<form action="https://buttondown.com/api/emails/embed-subscribe/duko" method="post" target="popupwindow" onsubmit="window.open('https://buttondown.com/duko', 'popupwindow')" class="nieuwsbrief-form">
+<input type="email" name="email" placeholder="jij@voorbeeld.nl" required>
+<input type="hidden" value="1" name="embed">
+<button type="submit">Meld je aan</button>
+</form>
+</div>
+<div class="retailer-balk">
+<div class="retailer-balk-label">We scannen aanbiedingen bij</div>
+<div class="retailer-lijst">
+<span class="retailer-pill">Wijnvoordeel</span><span class="retailer-pill">Grape District</span><span class="retailer-pill">Henri Bloem</span><span class="retailer-pill">Vindict</span><span class="retailer-pill">Hema</span><span class="retailer-pill">De Gouden Ton</span><span class="retailer-pill">Grand Cru Wijnen</span><span class="retailer-pill">Wijnbeurs</span><span class="retailer-pill">Dirck3</span><span class="retailer-pill">Jumbo</span><span class="retailer-pill">Voordeelwijnen</span><span class="retailer-pill">Perfecte Wijn</span>
+</div>
+</div>
+</div>
+<script>
+function wdsWisselThema() {
+  var html = document.documentElement;
+  var volgende = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', volgende);
+  localStorage.setItem('wds-theme', volgende);
+}
+</script>
+</body>
+</html>

@@ -1,33 +1,56 @@
 :root {
     color-scheme: light dark;
 
-    --bg: #faf6f6;
-    --surface: #ffffff;
-    --text: #241318;
-    --text-muted: #7a6169;
-    --accent: #6d1b34;
-    --accent-strong: #4a1224;
-    --gold: #a9793f;
-    --border: #e8dcdd;
+    --bg: oklch(97% 0.015 80);
+    --card: oklch(99% 0.008 80);
+    --text: oklch(22% 0.01 80);
+    --muted: oklch(45% 0.01 80);
+    --divider: oklch(88% 0.01 80);
+    --highlight: oklch(93% 0.015 80);
+    --accent: oklch(35% 0.12 20);
+    --accent-strong: oklch(30% 0.13 20);
+    --icon-outline: oklch(40% 0.01 80 / .35);
 
-    --serif: Georgia, "Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif;
-    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-
-    --badge-bg: rgba(109, 27, 52, 0.08);
+    --serif: "Newsreader", Georgia, "Iowan Old Style", "Palatino Linotype", serif;
+    --sans: "Karla", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
     :root {
-        --bg: #170f13;
-        --surface: #221722;
-        --text: #f2e9ea;
-        --text-muted: #b39aa1;
-        --accent: #e0a2b2;
-        --accent-strong: #eebbc8;
-        --gold: #d4a054;
-        --border: #3a2830;
-        --badge-bg: rgba(224, 162, 178, 0.12);
+        --bg: oklch(18% 0.012 60);
+        --card: oklch(21% 0.012 60);
+        --text: oklch(92% 0.008 60);
+        --muted: oklch(65% 0.01 60);
+        --divider: oklch(32% 0.012 60);
+        --highlight: oklch(25% 0.014 60);
+        --accent: oklch(74% 0.12 30);
+        --accent-strong: oklch(80% 0.12 30);
+        --icon-outline: oklch(85% 0.01 60 / .35);
     }
+}
+
+:root[data-theme="light"] {
+    --bg: oklch(97% 0.015 80);
+    --card: oklch(99% 0.008 80);
+    --text: oklch(22% 0.01 80);
+    --muted: oklch(45% 0.01 80);
+    --divider: oklch(88% 0.01 80);
+    --highlight: oklch(93% 0.015 80);
+    --accent: oklch(35% 0.12 20);
+    --accent-strong: oklch(30% 0.13 20);
+    --icon-outline: oklch(40% 0.01 80 / .35);
+}
+
+:root[data-theme="dark"] {
+    --bg: oklch(18% 0.012 60);
+    --card: oklch(21% 0.012 60);
+    --text: oklch(92% 0.008 60);
+    --muted: oklch(65% 0.01 60);
+    --divider: oklch(32% 0.012 60);
+    --highlight: oklch(25% 0.014 60);
+    --accent: oklch(74% 0.12 30);
+    --accent-strong: oklch(80% 0.12 30);
+    --icon-outline: oklch(85% 0.01 60 / .35);
 }
 
 * {
@@ -41,42 +64,500 @@ body {
     line-height: 1.65;
     margin: 0;
     -webkit-font-smoothing: antialiased;
+    transition: background 0.15s, color 0.15s;
 }
 
 .pagina {
-    max-width: 760px;
+    max-width: 680px;
     margin: 0 auto;
-    padding: 3rem 1.5rem 5rem;
+    padding: 2.5rem 1.5rem 4.5rem;
 }
 
-/* Site header / wordmark */
-.site-header {
-    margin-bottom: 3rem;
-}
-
-.site-header h1 {
+/* Wordmark + header rij (edition & index) */
+.wordmark {
     font-family: var(--serif);
-    font-size: 2.1rem;
-    font-weight: 400;
+    font-size: 1.65rem;
+    font-weight: 500;
     letter-spacing: 0.01em;
-    margin: 0 0 0.35rem;
-    border-bottom: none;
-    padding-bottom: 0;
+    color: var(--text);
+    text-decoration: none;
 }
 
+.header-rij {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.editie-eyebrow,
 .site-tagline {
-    font-size: 0.9rem;
-    color: var(--text-muted);
-    margin: 0;
-    text-transform: uppercase;
+    font-size: 0.75rem;
     letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0;
 }
 
-/* Edition cards (index page) */
+.header-links {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    font-size: 0.8rem;
+}
+
+.header-links a {
+    color: var(--muted);
+    text-decoration: none;
+}
+
+.header-links a:hover {
+    color: var(--accent);
+}
+
+.theme-toggle {
+    background: none;
+    border: none;
+    padding: 0.5rem;
+    margin: -0.5rem -0.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.theme-toggle-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 1.3px solid var(--muted);
+    background: transparent;
+}
+
+:root[data-theme="dark"] .theme-toggle-dot {
+    background: var(--muted);
+}
+
+hr {
+    border: none;
+    border-top: 1px solid var(--divider);
+    margin: 1.5rem 0;
+}
+
+a {
+    color: var(--accent);
+}
+
+a:hover {
+    color: var(--accent-strong);
+}
+
+/* Intro-zin (edition page) */
+.editie-intro {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1.15rem;
+    line-height: 1.55;
+    margin: 0 0 1rem;
+    color: var(--text);
+}
+
+/* Eyebrow-labels boven secties */
+.sectie-eyebrow {
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin: 2rem 0 0.25rem;
+}
+
+/* Top-3 lijst (vloeiende rijen i.p.v. kaders) */
+.top-wijnen {
+    display: flex;
+    flex-direction: column;
+}
+
+.wijn-kaart {
+    padding: 1.25rem 0;
+    border-top: 1px solid var(--divider);
+}
+
+.wijn-kaart-kop {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.wijn-kaart-links {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    min-width: 0;
+}
+
+.wijn-kaart-titel {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+/* Fles-icoontjes, kleur per wijntype (--fles-body / --fles-neck, per instantie gezet) */
+.fles-icoon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+    margin-top: 5px;
+}
+
+.fles-dop {
+    width: 5px;
+    height: 5px;
+    background: var(--fles-neck);
+    border-radius: 1px 1px 0 0;
+    box-shadow: inset 0 0 0 1px var(--icon-outline);
+}
+
+.fles-nek {
+    width: 5px;
+    height: 5px;
+    background: var(--fles-neck);
+    box-shadow: inset 0 0 0 1px var(--icon-outline);
+}
+
+.fles-schouder {
+    width: 12px;
+    height: 5px;
+    background: var(--fles-neck);
+    clip-path: polygon(21% 0%, 79% 0%, 100% 100%, 0% 100%);
+    box-shadow: inset 0 0 0 1px var(--icon-outline);
+}
+
+.fles-body {
+    width: 12px;
+    height: 21px;
+    background: var(--fles-body);
+    border-radius: 0 0 4px 4px;
+    box-shadow: inset 0 0 0 1px var(--icon-outline);
+}
+
+.fles-icoon--klein {
+    margin-top: 0;
+}
+
+.fles-icoon--klein .fles-dop {
+    width: 3px;
+    height: 4px;
+}
+
+.fles-icoon--klein .fles-nek {
+    width: 3px;
+    height: 4px;
+}
+
+.fles-icoon--klein .fles-schouder {
+    width: 9px;
+    height: 4px;
+}
+
+.fles-icoon--klein .fles-body {
+    width: 9px;
+    height: 15px;
+    border-radius: 0 0 3px 3px;
+}
+
+.wijn-type {
+    font-size: 11px;
+    line-height: 1.15;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+.wijn-naam {
+    font-family: var(--serif);
+    font-size: 1.125rem;
+    font-weight: 500;
+    line-height: 1.15;
+    color: var(--text);
+    margin-top: 2px;
+}
+
+.winkel-badge {
+    font-size: 0.78rem;
+    line-height: 1.15;
+    color: var(--muted);
+    margin-top: 4px;
+}
+
+.kop-score-prijs {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 3px;
+    margin-left: auto;
+}
+
+.score-badge {
+    font-family: var(--serif);
+    font-weight: 500;
+    color: var(--text);
+    display: flex;
+    align-items: baseline;
+    gap: 2px;
+}
+
+.score-num {
+    font-size: 1.6rem;
+    line-height: 1;
+}
+
+.score-suffix {
+    font-size: 0.75rem;
+    color: var(--muted);
+}
+
+.prijs-rij {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+}
+
+.prijs-oud {
+    text-decoration: line-through;
+    color: var(--muted);
+    font-size: 0.7rem;
+    opacity: 0.75;
+}
+
+.prijs-nieuw {
+    color: var(--accent-strong);
+    font-weight: 700;
+    font-size: 0.95rem;
+}
+
+.wijn-tekst p {
+    margin: 0 0 0.9rem;
+    font-size: 0.95rem;
+    line-height: 1.65;
+}
+
+.wijn-tekst p:last-child {
+    margin-bottom: 0;
+}
+
+.bestel-link {
+    display: inline-block;
+    margin-top: 0.75rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--accent);
+    text-decoration: none;
+}
+
+.bestel-link:hover {
+    color: var(--accent-strong);
+}
+
+/* Overig-sectie */
+.overig-sectie {
+    margin-top: 1rem;
+}
+
+.overig-sectie h2 {
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 600;
+    margin: 2rem 0 0.25rem;
+}
+
+.overig-lijst {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.overig-lijst li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.5rem 0;
+    border-top: 1px solid var(--divider);
+    margin-bottom: 0;
+    font-size: 0.85rem;
+}
+
+.overig-hoofd {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    min-width: 0;
+}
+
+.overig-links {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.overig-naam {
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 500;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.overig-naam:hover {
+    color: var(--accent);
+}
+
+.overig-meta {
+    font-size: 0.75rem;
+    line-height: 1.2;
+    color: var(--muted);
+}
+
+.overig-rechts {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    line-height: 1.15;
+    flex-shrink: 0;
+}
+
+.score-pill {
+    font-family: var(--serif);
+    font-size: 0.85rem;
+    color: var(--accent-strong);
+    font-weight: 600;
+    display: flex;
+    align-items: baseline;
+    gap: 1px;
+}
+
+.score-pill-suffix {
+    font-size: 0.65rem;
+    color: var(--muted);
+    font-weight: 400;
+}
+
+.overig-prijs {
+    display: flex;
+    align-items: baseline;
+    gap: 5px;
+}
+
+.overig-prijs-oud {
+    text-decoration: line-through;
+    color: var(--muted);
+    font-size: 0.7rem;
+    opacity: 0.75;
+}
+
+.overig-prijs-nieuw {
+    color: var(--accent-strong);
+    font-weight: 700;
+    font-size: 0.82rem;
+}
+
+/* Nieuwsbrief-aanmeldvak */
+.nieuwsbrief-vak {
+    padding: 1.5rem;
+    background: var(--highlight);
+    border-radius: 4px;
+    margin-top: 2.5rem;
+}
+
+.nieuwsbrief-tekst {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
+    color: var(--text);
+}
+
+.nieuwsbrief-form {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.nieuwsbrief-form input[type="email"] {
+    flex: 1;
+    min-width: 180px;
+    border: 1px solid var(--divider);
+    background: var(--card);
+    padding: 0.7rem 0.8rem;
+    font-size: 0.9rem;
+    border-radius: 3px;
+    color: var(--text);
+    font-family: var(--sans);
+}
+
+.nieuwsbrief-form button {
+    border: none;
+    background: var(--accent-strong);
+    color: oklch(98% 0 0);
+    padding: 0 1.2rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: 3px;
+    font-family: var(--sans);
+    cursor: pointer;
+    min-height: 42px;
+    white-space: nowrap;
+}
+
+.nieuwsbrief-form button:hover {
+    opacity: 0.9;
+}
+
+/* Retailer-balk */
+.retailer-balk {
+    margin-top: 2rem;
+}
+
+.retailer-balk-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.6rem;
+}
+
+.retailer-lijst {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.retailer-pill {
+    padding: 0.4rem 0.7rem;
+    background: var(--highlight);
+    font-family: ui-monospace, monospace;
+    font-size: 0.68rem;
+    color: var(--muted);
+    border-radius: 3px;
+}
+
+/* Archief-index: editiekaarten */
 .edities-grid {
     display: flex;
     flex-direction: column;
-    gap: 0.9rem;
+    gap: 0.8rem;
+    margin-top: 1.5rem;
 }
 
 .editie-kaart {
@@ -84,11 +565,11 @@ body {
     align-items: baseline;
     justify-content: space-between;
     gap: 1rem;
-    background: var(--surface);
-    border: 1px solid var(--border);
+    background: var(--card);
+    border: 1px solid var(--divider);
     border-top: 2px solid var(--accent);
     border-radius: 3px;
-    padding: 1.15rem 1.4rem;
+    padding: 1.1rem 1.3rem;
     text-decoration: none;
     color: var(--text);
     transition: border-color 0.15s ease, transform 0.15s ease;
@@ -101,155 +582,13 @@ body {
 
 .editie-datum {
     font-family: var(--serif);
-    font-size: 1.1rem;
+    font-size: 1.05rem;
 }
 
 .editie-link {
-    font-size: 0.8rem;
-    color: var(--gold);
+    font-size: 0.75rem;
+    color: var(--accent-strong);
     white-space: nowrap;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-}
-
-/* Generic content typography */
-h1 {
-    font-family: var(--serif);
-    font-size: 1.7rem;
-    font-weight: 400;
-    margin: 0;
-}
-
-p {
-    margin: 0 0 1.1rem;
-}
-
-a {
-    color: var(--accent);
-}
-
-a:hover {
-    color: var(--accent-strong);
-}
-
-hr {
-    border: none;
-    border-top: 1px solid var(--border);
-    margin: 2.5rem 0;
-}
-
-li {
-    margin-bottom: 0.5rem;
-}
-
-/* Edition page header */
-.editie-header {
-    margin-bottom: 2.5rem;
-}
-
-.editie-eyebrow {
-    font-size: 0.8rem;
-    color: var(--gold);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin: 0 0 0.5rem;
-}
-
-.editie-header h1 {
-    border-bottom: 2px solid var(--accent);
-    padding-bottom: 0.6rem;
-}
-
-/* Top-3 kaarten */
-.top-wijnen {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-}
-
-.wijn-kaart {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 3px;
-    padding: 1.75rem;
-}
-
-.wijn-kaart-kop {
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 0.5rem;
-}
-
-.wijn-kaart-kop:empty {
-    display: none;
-}
-
-.score-badge {
-    font-family: var(--serif);
-    font-size: 0.95rem;
-    color: var(--accent);
-    background: var(--badge-bg);
-    border: 1px solid var(--accent);
-    border-radius: 999px;
-    padding: 0.15rem 0.75rem;
-    white-space: nowrap;
-}
-
-.wijn-tekst p:last-child {
-    margin-bottom: 0;
-}
-
-.bestel-link {
-    display: inline-block;
-    margin-top: 0.75rem;
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--accent);
-    text-decoration: none;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-}
-
-.bestel-link:hover {
-    color: var(--accent-strong);
-}
-
-/* Overig-sectie */
-.overig-sectie {
-    margin-top: 3rem;
-}
-
-.overig-sectie h2 {
-    font-family: var(--serif);
-    font-size: 1.2rem;
-    font-weight: 400;
-    color: var(--text);
-    margin: 0 0 0.5rem;
-}
-
-.overig-lijst {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-.overig-lijst li {
-    display: flex;
-    align-items: baseline;
-    gap: 0.75rem;
-    padding: 0.75rem 0;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 0;
-    font-size: 0.92rem;
-}
-
-.overig-lijst li:last-child {
-    border-bottom: none;
-}
-
-.score-pill {
-    font-family: var(--serif);
-    font-size: 0.8rem;
-    color: var(--gold);
-    flex-shrink: 0;
 }
