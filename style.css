@@ -146,6 +146,12 @@ hr {
     margin: 1.5rem 0;
 }
 
+/* Op de archiefpagina staat de eerste editierij direct onder de hr (elk met een eigen
+   border-top) — bewust dicht op elkaar, als een dubbele streep, zoals in het ontwerp. */
+.archief-hr {
+    margin-bottom: 4px;
+}
+
 a {
     color: var(--accent);
 }
@@ -564,43 +570,84 @@ a:hover {
     display: block;
 }
 
-/* Archief-index: editiekaarten */
-.edities-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
-    margin-top: 1.5rem;
+/* Archief-index: editierijen */
+.edities-lijst {
+    margin-top: 0;
 }
 
-.editie-kaart {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 1rem;
-    background: var(--card);
-    border: 1px solid var(--divider);
-    border-top: 2px solid var(--accent);
-    border-radius: 3px;
-    padding: 1.1rem 1.3rem;
+.editie-rij {
+    display: block;
+    padding: 1.1rem 0.25rem;
+    border-top: 1px solid var(--divider);
     text-decoration: none;
-    color: var(--text);
-    transition: border-color 0.15s ease, transform 0.15s ease;
+    color: inherit;
+    transition: background 0.12s ease;
 }
 
-.editie-kaart:hover {
-    border-color: var(--accent);
-    transform: translateY(-1px);
+.editie-rij:hover {
+    background: var(--highlight);
 }
 
-.editie-datum {
+.editie-rij-binnen {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.editie-rij-links {
+    min-width: 0;
+}
+
+.editie-rij-datum {
     font-family: var(--serif);
-    font-size: 1.05rem;
+    font-size: 1.15rem;
+    font-weight: 500;
 }
 
-.editie-link {
-    font-size: 0.75rem;
-    color: var(--accent-strong);
+.editie-rij-samenvatting {
+    font-size: 0.84rem;
+    line-height: 1.5;
+    color: var(--muted);
+    margin: 0.35rem 0 0;
+    max-width: 440px;
+}
+
+.editie-rij-types {
+    display: flex;
+    gap: 5px;
+    margin-top: 0.6rem;
+}
+
+.editie-rij-rechts {
+    text-align: right;
+    flex: none;
     white-space: nowrap;
+    padding-top: 2px;
+}
+
+.editie-rij-score-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    color: var(--muted);
+}
+
+.editie-rij-score-waarde {
+    font-family: var(--serif);
+    font-size: 1.35rem;
+    font-weight: 500;
+    margin-top: 2px;
+}
+
+.editie-rij-score-suffix {
+    font-size: 0.68rem;
+    color: var(--muted);
+}
+
+.editie-rij-link {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--accent);
+    margin-top: 0.5rem;
 }
