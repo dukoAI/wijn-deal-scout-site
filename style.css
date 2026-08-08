@@ -9,7 +9,6 @@
     --highlight: oklch(93% 0.015 80);
     --accent: oklch(35% 0.12 20);
     --accent-strong: oklch(30% 0.13 20);
-    --icon-outline: oklch(40% 0.01 80 / .35);
 
     --serif: "Newsreader", Georgia, "Iowan Old Style", "Palatino Linotype", serif;
     --sans: "Karla", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -25,7 +24,6 @@
         --highlight: oklch(25% 0.014 60);
         --accent: oklch(74% 0.12 30);
         --accent-strong: oklch(80% 0.12 30);
-        --icon-outline: oklch(85% 0.01 60 / .35);
     }
 }
 
@@ -38,7 +36,6 @@
     --highlight: oklch(93% 0.015 80);
     --accent: oklch(35% 0.12 20);
     --accent-strong: oklch(30% 0.13 20);
-    --icon-outline: oklch(40% 0.01 80 / .35);
 }
 
 :root[data-theme="dark"] {
@@ -50,7 +47,6 @@
     --highlight: oklch(25% 0.014 60);
     --accent: oklch(74% 0.12 30);
     --accent-strong: oklch(80% 0.12 30);
-    --icon-outline: oklch(85% 0.01 60 / .35);
 }
 
 * {
@@ -212,69 +208,19 @@ a:hover {
     min-width: 0;
 }
 
-/* Fles-icoontjes, kleur per wijntype (--fles-body / --fles-neck, per instantie gezet) */
+/* Fles-icoontjes: eigen SVG per wijntype (site/assets/icons/), verhouding 1:3 (b:h) */
 .fles-icoon {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    display: block;
+    width: 12px;
+    height: 36px;
     flex-shrink: 0;
     margin-top: 5px;
 }
 
-.fles-dop {
-    width: 5px;
-    height: 5px;
-    background: var(--fles-neck);
-    border-radius: 1px 1px 0 0;
-    box-shadow: inset 0 0 0 1px var(--icon-outline);
-}
-
-.fles-nek {
-    width: 5px;
-    height: 5px;
-    background: var(--fles-neck);
-    box-shadow: inset 0 0 0 1px var(--icon-outline);
-}
-
-.fles-schouder {
-    width: 12px;
-    height: 5px;
-    background: var(--fles-neck);
-    clip-path: polygon(21% 0%, 79% 0%, 100% 100%, 0% 100%);
-    box-shadow: inset 0 0 0 1px var(--icon-outline);
-}
-
-.fles-body {
-    width: 12px;
-    height: 21px;
-    background: var(--fles-body);
-    border-radius: 0 0 4px 4px;
-    box-shadow: inset 0 0 0 1px var(--icon-outline);
-}
-
 .fles-icoon--klein {
+    width: 9px;
+    height: 27px;
     margin-top: 0;
-}
-
-.fles-icoon--klein .fles-dop {
-    width: 3px;
-    height: 4px;
-}
-
-.fles-icoon--klein .fles-nek {
-    width: 3px;
-    height: 4px;
-}
-
-.fles-icoon--klein .fles-schouder {
-    width: 9px;
-    height: 4px;
-}
-
-.fles-icoon--klein .fles-body {
-    width: 9px;
-    height: 15px;
-    border-radius: 0 0 3px 3px;
 }
 
 .wijn-type {
