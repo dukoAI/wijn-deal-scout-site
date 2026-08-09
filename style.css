@@ -9,6 +9,7 @@
     --highlight: oklch(93% 0.015 80);
     --accent: oklch(35% 0.12 20);
     --accent-strong: oklch(30% 0.13 20);
+    --cta-bg: oklch(92% 0.03 30);
 
     --serif: "Newsreader", Georgia, "Iowan Old Style", "Palatino Linotype", serif;
     --sans: "Karla", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -24,6 +25,7 @@
         --highlight: oklch(25% 0.014 60);
         --accent: oklch(74% 0.12 30);
         --accent-strong: oklch(80% 0.12 30);
+        --cta-bg: oklch(31% 0.035 35);
     }
 }
 
@@ -36,6 +38,7 @@
     --highlight: oklch(93% 0.015 80);
     --accent: oklch(35% 0.12 20);
     --accent-strong: oklch(30% 0.13 20);
+    --cta-bg: oklch(92% 0.03 30);
 }
 
 :root[data-theme="dark"] {
@@ -47,6 +50,7 @@
     --highlight: oklch(25% 0.014 60);
     --accent: oklch(74% 0.12 30);
     --accent-strong: oklch(80% 0.12 30);
+    --cta-bg: oklch(31% 0.035 35);
 }
 
 * {
@@ -223,7 +227,7 @@ a:hover {
     margin-top: 0;
 }
 
-.wijn-type {
+.wijn-regio {
     font-size: 11px;
     line-height: 1.15;
     letter-spacing: 0.06em;
@@ -240,11 +244,31 @@ a:hover {
     margin-top: 2px;
 }
 
-.winkel-badge {
+.wijn-druiven {
     font-size: 0.78rem;
-    line-height: 1.15;
+    line-height: 1.2;
     color: var(--muted);
     margin-top: 4px;
+}
+
+/* Foto van de top-3-wijn (transparante achtergrond, zie wijnfoto.py) — zelfde
+   buitenmaten als het flesicoon zodat de kop niet springt tussen wijnen met/zonder foto. */
+.wijn-foto {
+    width: 42px;
+    height: 84px;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
+.wijn-foto img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.bestel-winkel {
+    font-weight: 700;
 }
 
 .kop-score-prijs {
@@ -424,10 +448,28 @@ a:hover {
     font-size: 0.82rem;
 }
 
+/* Op smalle schermen duwt een lange wijnnaam (2 regels) de score/prijs-kolom
+   scheef omhoog, met veel lege ruimte ernaast. Stapel de kop dan i.p.v.
+   ernaast te dwingen. */
+@media (max-width: 420px) {
+    .wijn-kaart-kop {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .kop-score-prijs {
+        flex-direction: row;
+        align-items: baseline;
+        margin-left: 0;
+        margin-top: 0.6rem;
+        gap: 10px;
+    }
+}
+
 /* Nieuwsbrief-aanmeldvak */
 .nieuwsbrief-vak {
     padding: 1.5rem;
-    background: var(--highlight);
+    background: var(--cta-bg);
     border-radius: 4px;
     margin-top: 2.5rem;
 }
