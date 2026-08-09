@@ -258,6 +258,7 @@ a:hover {
     height: 84px;
     flex-shrink: 0;
     overflow: hidden;
+    border-radius: 4px;
 }
 
 .wijn-foto img {
@@ -265,6 +266,13 @@ a:hover {
     width: 100%;
     height: 100%;
     object-fit: contain;
+}
+
+/* Een donkere fles (zwart glas, donker etiket) valt anders bijna weg tegen de donkere
+   pagina-achtergrond — een zachte kaart erachter geeft genoeg contrast. In licht thema is
+   dit niet nodig (daar steekt de foto al goed af), dus alleen in donker thema. */
+:root[data-theme="dark"] .wijn-foto {
+    background: var(--highlight);
 }
 
 .bestel-winkel {
