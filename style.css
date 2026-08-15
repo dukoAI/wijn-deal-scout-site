@@ -227,6 +227,14 @@ a:hover {
     margin-top: 0;
 }
 
+/* Terugval in de top-3-kaart als er geen foto is: even hoog als .wijn-foto (84px), zodat de
+   kaartkop niet springt tussen wijnen met en zonder foto. */
+.fles-icoon--kaart {
+    width: 28px;
+    height: 84px;
+    margin-top: 0;
+}
+
 .wijn-regio {
     font-size: 11px;
     line-height: 1.15;
@@ -411,6 +419,27 @@ a:hover {
     font-size: 0.75rem;
     line-height: 1.2;
     color: var(--muted);
+}
+
+/* De metaregel bevat sinds 15 augustus 2026 herkomst · druiven · winkel en kan daardoor lang
+   worden (Barão de Vilar heeft vijf druiven). Afkappen i.p.v. laten teruglopen, zodat elke
+   regel in de overig-lijst even hoog blijft — zelfde behandeling als .overig-naam hierboven.
+   De winkelnaam krijgt flex:none en kapt dus nooit af: de wijninfo ervoor loopt eerder weg
+   dan de plek waar je de fles kunt kopen. */
+.overig-links .overig-meta {
+    display: flex;
+    min-width: 0;
+}
+
+.overig-meta-wijn {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.overig-meta-winkel {
+    flex: none;
+    white-space: pre;
 }
 
 .overig-rechts {
@@ -646,4 +675,545 @@ a:hover {
     font-weight: 600;
     color: var(--accent);
     margin-top: 0.5rem;
+}
+
+/* ================================================================
+   Kennisbank (site/kennisbank.html + site/kennisbank/<slug>/)
+   Gegenereerd door genereer_kennisbank.py, gefilterd door kennisbank.js.
+   Gebruikt dezelfde tokens en dezelfde .wijn-naam/.overig-meta/.score-pill
+   als de editiepagina's — een wijnregel hoort er overal hetzelfde uit te zien.
+   ================================================================ */
+
+.kb-eyebrow {
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+}
+
+.kb-titel {
+    font-family: var(--serif);
+    font-size: 1.9rem;
+    font-weight: 500;
+    line-height: 1.15;
+    margin: 0.3rem 0 0.5rem;
+}
+
+/* Formulierbesturing erft standaard niet de paginafont/-kleur */
+.kb-zoekbalk input,
+.kb-zoekbalk select,
+.kb-chip,
+.kb-chip-wis,
+.kb-leeg-knop {
+    font-family: var(--sans);
+    color: var(--text);
+}
+
+.kb-zoekbalk input:focus-visible,
+.kb-zoekbalk select:focus-visible,
+.kb-zoekbalk summary:focus-visible,
+.kb-chip:focus-visible,
+.kb-chip-wis:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+}
+
+.kb-zoekbalk {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-top: 1.75rem;
+}
+
+.kb-zoekveld {
+    width: 100%;
+    border: 1px solid var(--divider);
+    background: var(--card);
+    border-radius: 3px;
+    padding: 0.65rem 0.75rem;
+    font-size: 0.95rem;
+}
+
+.kb-filterpaneel {
+    border: 1px solid var(--divider);
+    border-radius: 3px;
+    background: var(--card);
+}
+
+.kb-filterpaneel-kop {
+    cursor: pointer;
+    list-style: none;
+    padding: 0.55rem 0.75rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+}
+
+.kb-filterpaneel-kop::-webkit-details-marker {
+    display: none;
+}
+
+.kb-filter-samenvatting {
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: 0;
+}
+
+.kb-filterpaneel-body {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem 1rem;
+    padding: 0.25rem 0.75rem 1rem;
+    border-top: 1px solid var(--divider);
+}
+
+.kb-filter {
+    flex: 1 1 8rem;
+    min-width: 8rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+.kb-filter select {
+    display: block;
+    width: 100%;
+    margin-top: 0.2rem;
+    border: 1px solid var(--divider);
+    background: var(--bg);
+    border-radius: 3px;
+    padding: 0.4rem;
+    font-size: 0.85rem;
+    text-transform: none;
+    letter-spacing: 0;
+}
+
+.kb-resultaatrij {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5rem 1rem;
+    padding: 1.25rem 0 0.25rem;
+}
+
+.kb-telling {
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+.kb-actieve-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-left: auto;
+}
+
+.kb-chip {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.75rem;
+    padding: 0.15rem 0.5rem;
+    border: 1px solid var(--accent);
+    border-radius: 3px;
+    background: var(--highlight);
+    cursor: pointer;
+}
+
+.kb-chip-kruis {
+    color: var(--accent);
+    font-weight: 600;
+}
+
+.kb-chip-wis {
+    background: none;
+    border: none;
+    padding: 0.15rem 0.2rem;
+    font-size: 0.75rem;
+    color: var(--accent);
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.kb-chip-wis:hover {
+    color: var(--accent-strong);
+}
+
+/* Wijnrij in het overzicht */
+.kb-rij {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0.85rem 0.35rem;
+    border-top: 1px solid var(--divider);
+    color: inherit;
+    text-decoration: none;
+    transition: background 0.12s ease;
+}
+
+.kb-rij:hover {
+    background: var(--highlight);
+    color: inherit;
+}
+
+/* Noodzakelijk, niet overbodig: kennisbank.js verbergt een rij met het hidden-attribuut, maar
+   de browserregel [hidden] { display: none } is minder specifiek dan .kb-rij { display: flex }
+   hierboven en verliest het daarvan. Zonder deze regel klopt de teller wel ("3 van 8") terwijl
+   alle acht rijen zichtbaar blijven staan. */
+.kb-rij[hidden] {
+    display: none;
+}
+
+.kb-rij-tekst {
+    min-width: 0;
+    flex: 1;
+}
+
+.kb-rij .wijn-naam,
+.kb-rij .overig-meta,
+.kb-rij .overig-naam {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.kb-rij-rechts {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    flex-shrink: 0;
+    line-height: 1.2;
+}
+
+.kb-beoordeeld-op {
+    font-size: 0.68rem;
+    color: var(--muted);
+    white-space: nowrap;
+}
+
+.kb-beeld {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 4px;
+}
+
+.kb-beeld img {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+}
+
+/* Het flesicoon is een vaste 12x36 vorm en hoort niet uitgerekt te worden naar 48x48 */
+.kb-beeld--icoon .fles-icoon {
+    margin-top: 0;
+}
+
+/* Zelfde reden als bij .wijn-foto op de editiepagina: een donkere fles verdwijnt anders
+   bijna tegen de donkere achtergrond. Alleen voor foto's, niet voor de lijniconen. */
+:root[data-theme="dark"] .kb-beeld:not(.kb-beeld--icoon),
+:root[data-theme="dark"] .kb-detail-foto:not(.kb-detail-foto--icoon) {
+    background: var(--highlight);
+}
+
+/* Score-badge in twee maten naast de bestaande (editiepagina) */
+.score-badge--klein .score-num {
+    font-size: 1.4rem;
+}
+
+.score-badge--klein .score-suffix {
+    font-size: 0.7rem;
+}
+
+.score-badge--groot .score-num {
+    font-size: 3rem;
+    line-height: 1;
+}
+
+.score-badge--groot .score-suffix {
+    font-size: 0.95rem;
+}
+
+/* Lege-resultatenblok */
+.kb-leeg {
+    background: var(--highlight);
+    border-radius: 4px;
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.kb-leeg-kop {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1.15rem;
+    line-height: 1.5;
+    margin: 0 0 0.5rem;
+}
+
+.kb-leeg-tekst {
+    font-size: 0.88rem;
+    color: var(--muted);
+    margin: 0 0 1rem;
+}
+
+.kb-leeg-knop {
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--accent);
+    cursor: pointer;
+}
+
+/* ---- detailpagina per wijn ---- */
+
+.kb-kruimels {
+    font-size: 0.78rem;
+    color: var(--muted);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    align-items: baseline;
+}
+
+.kb-kruimel-scheiding {
+    opacity: 0.5;
+}
+
+.kb-detail-kop {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+    margin-top: 1.1rem;
+}
+
+.kb-detail-titel {
+    min-width: 14rem;
+    flex: 1;
+}
+
+.kb-detail-titel h1 {
+    font-family: var(--serif);
+    font-size: 2rem;
+    font-weight: 500;
+    line-height: 1.1;
+    margin: 0;
+}
+
+.kb-detail-subkop {
+    font-size: 0.92rem;
+    color: var(--muted);
+    margin: 0.4rem 0 0;
+}
+
+.kb-detail-score {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    flex-shrink: 0;
+}
+
+.kb-score-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+.kb-detail-body {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    border-top: 1px solid var(--divider);
+    margin-top: 1.4rem;
+    padding-top: 1.4rem;
+}
+
+.kb-gegevens {
+    flex: 1 1 16rem;
+    min-width: 15rem;
+    display: grid;
+    grid-template-columns: 7.5rem 1fr;
+    gap: 0.5rem 0.9rem;
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+.kb-gegevens dt {
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding-top: 0.2rem;
+}
+
+.kb-gegevens dd {
+    margin: 0;
+}
+
+.kb-gegevens-extra {
+    font-size: 0.82rem;
+    color: var(--muted);
+}
+
+/* Vaste buitenmaat, foto erbinnen geschaald. Een flesfoto is smal en hoog (verhouding ~1:3),
+   dus alleen een breedte vastleggen levert een beeld van 120x400 op dat de feitentabel ernaast
+   wegdrukt. Begrenzen op hoogte houdt de kop van de pagina in verhouding, en houdt wijnen met
+   en zonder foto even hoog. */
+.kb-detail-foto {
+    flex: 0 0 auto;
+    width: 120px;
+    height: 220px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.kb-detail-foto img {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+}
+
+/* Zonder foto valt de pagina terug op het flesicoon. Dat moet net als een echte flesfoto de
+   volle hoogte van het vak vullen — een vaste kleine maat levert een postzegel midden in een
+   vak van 220 hoog. De SVG heeft viewBox 1:3, dus de breedte volgt vanzelf (73px). */
+.kb-detail-foto--icoon .fles-icoon {
+    width: auto;
+    height: 100%;
+    margin-top: 0;
+}
+
+.kb-bestel-vak {
+    background: var(--cta-bg);
+    border-radius: 4px;
+    padding: 1.1rem 1.25rem;
+    margin-top: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.kb-bestel-tekst {
+    min-width: 12rem;
+    flex: 1;
+}
+
+.kb-bestel-kop {
+    font-family: var(--serif);
+    font-size: 1.05rem;
+    line-height: 1.35;
+}
+
+.kb-bestel-sub {
+    font-size: 0.8rem;
+    color: var(--muted);
+}
+
+.kb-bestel-knop {
+    display: inline-block;
+    border: 1px solid var(--accent);
+    background: var(--accent);
+    color: var(--bg);
+    border-radius: 3px;
+    padding: 0.55rem 1rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.kb-bestel-knop:hover {
+    color: var(--bg);
+    opacity: 0.9;
+}
+
+/* Geen directe productlink bekend — een open knop, zodat het verschil met een echte
+   productlink zichtbaar is en niet alleen in de tekst zit. */
+.kb-bestel-knop--open {
+    background: transparent;
+    color: var(--accent);
+}
+
+.kb-bestel-knop--open:hover {
+    color: var(--accent-strong);
+    opacity: 1;
+}
+
+.kb-kop {
+    font-family: var(--serif);
+    font-size: 1.4rem;
+    font-weight: 500;
+    margin: 2.2rem 0 0.6rem;
+}
+
+.kb-kop-sub {
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin: -0.4rem 0 0.5rem;
+}
+
+.kb-gerelateerd .overig-lijst li {
+    display: block;
+    padding: 0;
+}
+
+.kb-rij--kort {
+    gap: 0.75rem;
+    padding: 0.6rem 0.35rem;
+    border-top: none;
+}
+
+.kb-terug {
+    border-top: 1px solid var(--divider);
+    margin-top: 2rem;
+    padding-top: 1rem;
+}
+
+.kb-terug a {
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+@media (max-width: 420px) {
+    .kb-detail-body {
+        flex-direction: column-reverse;
+    }
+
+    .kb-detail-foto {
+        align-self: center;
+    }
+
+    .kb-gegevens {
+        grid-template-columns: 6.5rem 1fr;
+    }
 }

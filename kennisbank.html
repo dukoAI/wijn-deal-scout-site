@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wijn Deal Scout - kennisbank</title>
+<meta name="description" content="Alle wijnen die Wijn Deal Scout beoordeeld heeft, met onze kwaliteitsscore per fles.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=Karla:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script>
+(function () {
+  var opgeslagen = localStorage.getItem('wds-theme');
+  var thema = opgeslagen || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  document.documentElement.setAttribute('data-theme', thema);
+})();
+</script>
+</head>
+<body>
+<div class="pagina">
+<header class="site-header">
+<a class="wordmark" href="index.html">Wijn Deal Scout</a>
+<div class="header-rij">
+<p class="site-tagline">Elke vrijdag de beste wijnaanbiedingen</p>
+<div class="header-links">
+<a href="index.html">Deze week</a> · <a href="archief.html">Archief</a>
+<button class="theme-toggle" onclick="wdsWisselThema()" aria-label="Wissel licht/donker" type="button">
+<span class="theme-toggle-dot"></span>
+</button>
+</div>
+</div>
+</header>
+<hr>
+<div class="kb-eyebrow">Kennisbank</div>
+<h1 class="kb-titel">Alle wijnen die we beoordeeld hebben</h1>
+<p class="editie-intro">Onze kwaliteitsscore gaat over de wijn zelf en staat los van de prijs van vandaag. Zoek op naam, land, streek, druif of kleur.</p>
+
+<div class="kb-zoekbalk" data-kb-zoekbalk hidden>
+<input class="kb-zoekveld" type="search" data-filter="zoek" placeholder="Zoek op naam, land, streek, druif of kleur" aria-label="Zoek in de kennisbank">
+<details class="kb-filterpaneel" open>
+<summary class="kb-filterpaneel-kop"><span>Filters</span><span class="kb-filter-samenvatting">geen actief</span></summary>
+<div class="kb-filterpaneel-body">
+<label class="kb-filter">Land
+<select data-filter="land" data-alles="Alle landen">
+<option value="">Alle landen</option>
+<option value="Chili">Chili (1)</option><option value="Frankrijk">Frankrijk (2)</option><option value="Italië">Italië (2)</option><option value="Portugal">Portugal (2)</option><option value="Spanje">Spanje (1)</option>
+</select>
+</label><label class="kb-filter">Streek
+<select data-filter="regio" data-alles="Alle streken">
+<option value="">Alle streken</option>
+<option value="Alentejo">Alentejo (1)</option><option value="Bourgogne">Bourgogne (1)</option><option value="Central Valley">Central Valley (1)</option><option value="Douro">Douro (1)</option><option value="Provence">Provence (1)</option><option value="Puglia">Puglia (1)</option><option value="Toscane">Toscane (1)</option>
+</select>
+</label><label class="kb-filter">Druif
+<select data-filter="druiven" data-alles="Alle druiven">
+<option value="">Alle druiven</option>
+<option value="Alicante Bouschet">Alicante Bouschet (1)</option><option value="Chardonnay">Chardonnay (2)</option><option value="Merlot">Merlot (1)</option><option value="Negroamaro">Negroamaro (1)</option><option value="Primitivo">Primitivo (1)</option><option value="Sangiovese">Sangiovese (1)</option><option value="Tinta Barroca">Tinta Barroca (1)</option><option value="Tinta Roriz">Tinta Roriz (1)</option><option value="Tinto Cão">Tinto Cão (1)</option><option value="Touriga Franca">Touriga Franca (1)</option><option value="Touriga Nacional">Touriga Nacional (1)</option>
+</select>
+</label><label class="kb-filter">Kleur
+<select data-filter="type" data-alles="Alle kleuren">
+<option value="">Alle kleuren</option>
+<option value="Rood">Rood (4)</option><option value="Rosé">Rosé (1)</option><option value="Wit">Wit (3)</option>
+</select>
+</label>
+<label class="kb-filter">Sorteer op
+<select data-sortering>
+<option value="kwaliteit">Kwaliteitsscore</option>
+<option value="recent">Meest recent beoordeeld</option>
+<option value="abc">Alfabetisch</option>
+</select>
+</label>
+</div>
+</details>
+</div>
+
+<div class="kb-resultaatrij">
+<div class="kb-telling">8 wijnen beoordeeld</div>
+<div class="kb-actieve-filters"></div>
+</div>
+
+<div class="kb-lijst">
+<a class="kb-rij" href="kennisbank/aluado-alicante-bouschet-2024/index.html"
+ data-zoek="aluado alicante bouschet 2024 rood alentejo portugal dfj vinhos alicante bouschet"
+ data-land="Portugal"
+ data-regio="Alentejo"
+ data-druiven="Alicante Bouschet"
+ data-type="Rood"
+ data-score="8.0"
+ data-datum="2026-08-09"
+ data-naam="aluado alicante bouschet">
+<div class="kb-beeld"><img src="assets/fotos/3.png" alt="Fles Aluado Alicante Bouschet 2024" loading="lazy"></div>
+<div class="kb-rij-tekst">
+<div class="wijn-naam">Aluado Alicante Bouschet 2024</div>
+<div class="overig-meta">Rood · Alentejo, Portugal · Alicante Bouschet</div>
+</div>
+<div class="kb-rij-rechts"><span class="score-badge score-badge--klein"><span class="score-num">8</span><span class="score-suffix">/10</span></span><span class="kb-beoordeeld-op">beoordeeld 9 aug 2026</span></div>
+</a><a class="kb-rij" href="kennisbank/barao-de-vilar-10-years-old-port-met-2-portglazen/index.html"
+ data-zoek="barão de vilar 10 years old port met 2 portglazen rood douro portugal touriga nacional touriga franca tinta roriz tinto cão tinta barroca"
+ data-land="Portugal"
+ data-regio="Douro"
+ data-druiven="Touriga Nacional|Touriga Franca|Tinta Roriz|Tinto Cão|Tinta Barroca"
+ data-type="Rood"
+ data-score="7.5"
+ data-datum="2026-08-09"
+ data-naam="barão de vilar 10 years old port met 2 portglazen">
+<div class="kb-beeld kb-beeld--icoon"><img class="fles-icoon kb-beeld-icoon" src="assets/icons/fles-rood.svg" alt="" loading="lazy"></div>
+<div class="kb-rij-tekst">
+<div class="wijn-naam">Barão de Vilar 10 Years Old Port met 2 portglazen</div>
+<div class="overig-meta">Rood · Douro, Portugal · Touriga Nacional, Touriga Franca, Tinta Roriz, Tinto Cão, Tinta Barroca</div>
+</div>
+<div class="kb-rij-rechts"><span class="score-badge score-badge--klein"><span class="score-num">7,5</span><span class="score-suffix">/10</span></span><span class="kb-beoordeeld-op">beoordeeld 9 aug 2026</span></div>
+</a><a class="kb-rij" href="kennisbank/domaine-de-la-motte-chablis-2024/index.html"
+ data-zoek="domaine de la motte chablis 2024 wit bourgogne frankrijk domaine de la motte chardonnay"
+ data-land="Frankrijk"
+ data-regio="Bourgogne"
+ data-druiven="Chardonnay"
+ data-type="Wit"
+ data-score="7.5"
+ data-datum="2026-08-09"
+ data-naam="domaine de la motte chablis">
+<div class="kb-beeld"><img src="assets/fotos/7.png" alt="Fles Domaine de la Motte Chablis 2024" loading="lazy"></div>
+<div class="kb-rij-tekst">
+<div class="wijn-naam">Domaine de la Motte Chablis 2024</div>
+<div class="overig-meta">Wit · Bourgogne, Frankrijk · Chardonnay</div>
+</div>
+<div class="kb-rij-rechts"><span class="score-badge score-badge--klein"><span class="score-num">7,5</span><span class="score-suffix">/10</span></span><span class="kb-beoordeeld-op">beoordeeld 9 aug 2026</span></div>
+</a><a class="kb-rij" href="kennisbank/menzatia-primitivo-negroamaro-2025/index.html"
+ data-zoek="menzatia primitivo-negroamaro 2025 rood puglia italië primitivo negroamaro"
+ data-land="Italië"
+ data-regio="Puglia"
+ data-druiven="Primitivo|Negroamaro"
+ data-type="Rood"
+ data-score="6.5"
+ data-datum="2026-08-09"
+ data-naam="menzatia primitivo-negroamaro">
+<div class="kb-beeld"><img src="assets/fotos/1.png" alt="Fles Menzatia Primitivo-Negroamaro 2025" loading="lazy"></div>
+<div class="kb-rij-tekst">
+<div class="wijn-naam">Menzatia Primitivo-Negroamaro 2025</div>
+<div class="overig-meta">Rood · Puglia, Italië · Primitivo, Negroamaro</div>
+</div>
+<div class="kb-rij-rechts"><span class="score-badge score-badge--klein"><span class="score-num">6,5</span><span class="score-suffix">/10</span></span><span class="kb-beoordeeld-op">beoordeeld 9 aug 2026</span></div>
+</a><a class="kb-rij" href="kennisbank/oro-italiano-governo-2023/index.html"
+ data-zoek="oro italiano governo 2023 rood toscane italië merlot sangiovese"
+ data-land="Italië"
+ data-regio="Toscane"
+ data-druiven="Merlot|Sangiovese"
+ data-type="Rood"
+ data-score="6.0"
+ data-datum="2026-08-09"
+ data-naam="oro italiano governo">
+<div class="kb-beeld kb-beeld--icoon"><img class="fles-icoon kb-beeld-icoon" src="assets/icons/fles-rood.svg" alt="" loading="lazy"></div>
+<div class="kb-rij-tekst">
+<div class="wijn-naam">Oro Italiano Governo 2023</div>
+<div class="overig-meta">Rood · Toscane, Italië · Merlot, Sangiovese</div>
+</div>
+<div class="kb-rij-rechts"><span class="score-badge score-badge--klein"><span class="score-num">6</span><span class="score-suffix">/10</span></span><span class="kb-beoordeeld-op">beoordeeld 9 aug 2026</span></div>
+</a><a class="kb-rij" href="kennisbank/xxx-coteaux-varois-en-provence-rose-2025/index.html"
+ data-zoek="xxx coteaux varois-en-provence rosé 2025 rosé provence frankrijk"
+ data-land="Frankrijk"
+ data-regio="Provence"
+ data-druiven=""
+ data-type="Rosé"
+ data-score="6.0"
+ data-datum="2026-08-09"
+ data-naam="xxx coteaux varois-en-provence rosé">
+<div class="kb-beeld kb-beeld--icoon"><img class="fles-icoon kb-beeld-icoon" src="assets/icons/fles-rose.svg" alt="" loading="lazy"></div>
+<div class="kb-rij-tekst">
+<div class="wijn-naam">XXX Coteaux Varois-en-Provence Rosé 2025</div>
+<div class="overig-meta">Rosé · Provence, Frankrijk</div>
+</div>
+<div class="kb-rij-rechts"><span class="score-badge score-badge--klein"><span class="score-num">6</span><span class="score-suffix">/10</span></span><span class="kb-beoordeeld-op">beoordeeld 9 aug 2026</span></div>
+</a><a class="kb-rij" href="kennisbank/cibolo-chardonnay-2025/index.html"
+ data-zoek="cibolo chardonnay 2025 wit spanje bodegas alceño"
+ data-land="Spanje"
+ data-regio=""
+ data-druiven=""
+ data-type="Wit"
+ data-score="4.5"
+ data-datum="2026-08-09"
+ data-naam="cibolo chardonnay">
+<div class="kb-beeld kb-beeld--icoon"><img class="fles-icoon kb-beeld-icoon" src="assets/icons/fles-wit.svg" alt="" loading="lazy"></div>
+<div class="kb-rij-tekst">
+<div class="wijn-naam">Cibolo Chardonnay 2025</div>
+<div class="overig-meta">Wit · Spanje</div>
+</div>
+<div class="kb-rij-rechts"><span class="score-badge score-badge--klein"><span class="score-num">4,5</span><span class="score-suffix">/10</span></span><span class="kb-beoordeeld-op">beoordeeld 9 aug 2026</span></div>
+</a><a class="kb-rij" href="kennisbank/picadora-chardonnay-2025/index.html"
+ data-zoek="picadora chardonnay 2025 wit central valley chili chardonnay"
+ data-land="Chili"
+ data-regio="Central Valley"
+ data-druiven="Chardonnay"
+ data-type="Wit"
+ data-score="4.0"
+ data-datum="2026-08-09"
+ data-naam="picadora chardonnay">
+<div class="kb-beeld kb-beeld--icoon"><img class="fles-icoon kb-beeld-icoon" src="assets/icons/fles-wit.svg" alt="" loading="lazy"></div>
+<div class="kb-rij-tekst">
+<div class="wijn-naam">Picadora Chardonnay 2025</div>
+<div class="overig-meta">Wit · Central Valley, Chili · Chardonnay</div>
+</div>
+<div class="kb-rij-rechts"><span class="score-badge score-badge--klein"><span class="score-num">4</span><span class="score-suffix">/10</span></span><span class="kb-beoordeeld-op">beoordeeld 9 aug 2026</span></div>
+</a>
+</div>
+
+<div class="kb-leeg" hidden>
+<p class="kb-leeg-kop">Geen wijn gevonden met deze combinatie.</p>
+<p class="kb-leeg-tekst">We beoordelen alleen wijnen die we in een aanbieding tegenkomen, dus de kennisbank groeit elke vrijdag. Probeer een ruimere zoekopdracht.</p>
+<button type="button" class="kb-leeg-knop" data-wis-alles>Alle filters wissen &rarr;</button>
+</div>
+
+<div class="nieuwsbrief-vak">
+<div class="nieuwsbrief-tekst">Elke vrijdag in je inbox</div>
+<form action="https://buttondown.com/api/emails/embed-subscribe/duko" method="post" target="popupwindow" onsubmit="window.open('https://buttondown.com/duko', 'popupwindow')" class="nieuwsbrief-form">
+<input type="email" name="email" placeholder="jij@voorbeeld.nl" required>
+<input type="hidden" value="1" name="embed">
+<button type="submit">Meld je aan</button>
+</form>
+</div>
+<div class="retailer-balk">
+<div class="retailer-balk-label">We scannen aanbiedingen bij</div>
+<div class="retailer-lijst">
+<div class="retailer-logo-chip"><img class="retailer-logo" src="assets/logos/wijnvoordeel.svg" alt="Wijnvoordeel" loading="lazy"></div><div class="retailer-logo-chip"><img class="retailer-logo" src="assets/logos/grapedistrict.svg" alt="Grape District" loading="lazy"></div><div class="retailer-logo-chip"><img class="retailer-logo" src="assets/logos/henribloem.png" alt="Henri Bloem" loading="lazy"></div><div class="retailer-logo-chip"><img class="retailer-logo" src="assets/logos/vindict.svg" alt="Vindict" loading="lazy"></div><div class="retailer-logo-chip"><img class="retailer-logo" src="assets/logos/hema.svg" alt="Hema" loading="lazy"></div><div class="retailer-logo-chip"><img class="retailer-logo" src="assets/logos/degoudenton.png" alt="De Gouden Ton" loading="lazy"></div><div class="retailer-logo-chip"><img class="retailer-logo" src="assets/logos/grandcru.svg" alt="Grand Cru Wijnen" loading="lazy"></div><div class="retailer-logo-chip"><img class="retailer-logo" src="assets/logos/wijnbeurs.png" alt="Wijnbeurs" loading="lazy"></div><div class="retailer-logo-chip"><img class="retailer-logo" src="assets/logos/dirck3.png" alt="Dirck3" loading="lazy"></div><div class="retailer-logo-chip"><img class="retailer-logo" src="assets/logos/jumbo.png" alt="Jumbo" loading="lazy"></div><div class="retailer-logo-chip"><img class="retailer-logo" src="assets/logos/voordeelwijnen.png" alt="Voordeelwijnen" loading="lazy"></div><div class="retailer-logo-chip"><img class="retailer-logo" src="assets/logos/perfectewijn.webp" alt="Perfecte Wijn" loading="lazy"></div><div class="retailer-logo-chip"><img class="retailer-logo" src="assets/logos/mitra.svg" alt="Mitra" loading="lazy"></div><div class="retailer-logo-chip"><img class="retailer-logo" src="assets/logos/colaris.svg" alt="Colaris" loading="lazy"></div><div class="retailer-logo-chip"><img class="retailer-logo" src="assets/logos/wijnhuis.png" alt="Wijnhuis" loading="lazy"></div><div class="retailer-logo-chip"><img class="retailer-logo" src="assets/logos/drankgigant.png" alt="Drankgigant" loading="lazy"></div><div class="retailer-logo-chip"><img class="retailer-logo" src="assets/logos/dewijnzaak.svg" alt="De Wijnzaak" loading="lazy"></div>
+</div>
+</div>
+</div>
+<script>
+function wdsWisselThema() {
+  var html = document.documentElement;
+  var volgende = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', volgende);
+  localStorage.setItem('wds-theme', volgende);
+}
+</script>
+<script src="kennisbank.js"></script>
+</body>
+</html>
