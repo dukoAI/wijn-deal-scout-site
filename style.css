@@ -726,6 +726,14 @@ a:hover {
     margin-top: 1.75rem;
 }
 
+/* Zelfde valkuil als bij .kb-rij[hidden] verderop: display: flex hierboven wint van de
+   browserregel [hidden] { display: none }. Zonder deze regel toont een bezoeker zonder
+   JavaScript wél de filterbalk, terwijl kennisbank.js er niet is om hem te laten werken —
+   een zoekveld en keuzelijsten die niets doen. (17 augustus 2026) */
+.kb-zoekbalk[hidden] {
+    display: none;
+}
+
 .kb-zoekveld {
     width: 100%;
     border: 1px solid var(--divider);
@@ -870,6 +878,38 @@ a:hover {
    hierboven en verliest het daarvan. Zonder deze regel klopt de teller wel ("3 van 8") terwijl
    alle acht rijen zichtbaar blijven staan. */
 .kb-rij[hidden] {
+    display: none;
+}
+
+/* "Toon meer"-knop onder de lijst */
+.kb-meer {
+    display: block;
+    width: 100%;
+    margin-top: 1.25rem;
+    padding: 0.7rem 1rem;
+    font-family: var(--sans);
+    font-size: 0.9rem;
+    color: var(--text);
+    background: transparent;
+    border: 1px solid var(--divider);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.12s ease, border-color 0.12s ease;
+}
+
+.kb-meer:hover {
+    background: var(--highlight);
+    border-color: var(--muted);
+}
+
+.kb-meer:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+}
+
+/* Zelfde reden als bij .kb-rij[hidden] hierboven: display: block wint het anders van de
+   browserregel [hidden] { display: none }, en dan blijft de knop staan als alles al getoond is. */
+.kb-meer[hidden] {
     display: none;
 }
 

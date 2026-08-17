@@ -7,9 +7,17 @@
  *
  * Filters stapelen: de aantallen tussen haakjes in een keuzelijst tellen alleen wat er met de
  * ANDERE actieve filters nog mogelijk is, zodat je nooit een combinatie kunt kiezen die niets
- * oplevert. */
+ * oplevert.
+ *
+ * Lange lijsten worden in stappen getoond met een "toon meer"-knop. Bewust géén paginering: het
+ * filteren werkt over ALLE rijen, en zodra je de lijst over meerdere pagina's verdeelt zou een
+ * zoekopdracht alleen nog binnen de huidige pagina kijken. De rijen staan dus allemaal in de HTML;
+ * dit script laat er alleen een deel van zien. Zonder JavaScript blijft de knop op `hidden` staan
+ * en is de lijst gewoon compleet. */
 
 (function () {
+  var BATCH = 25;
+
   var zoekbalk = document.querySelector('[data-kb-zoekbalk]');
   var lijst = document.querySelector('.kb-lijst');
   if (!zoekbalk || !lijst) return;
@@ -22,7 +30,9 @@
   var tellingVak = document.querySelector('.kb-telling');
   var chipVak = document.querySelector('.kb-actieve-filters');
   var leegVak = document.querySelector('.kb-leeg');
+  var meerKnop = document.querySelector('[data-toon-meer]');
   var totaal = rijen.length;
+  var getoond = BATCH;
 
   /* "Druiven" is het enige meerwaardige veld: data-druiven bevat ze pipe-gescheiden. */
   function waardenVan(rij, sleutel) {
@@ -145,18 +155,35 @@
     ververs();
   }
 
+  /* Elke filter-, zoek- of sorteerwijziging begint weer bij de eerste BATCH. Alleen de
+     "toon meer"-knop verhoogt `getoond`, en die roept daarom teken() aan en niet ververs(). */
   function ververs() {
+    getoond = BATCH;
+    teken();
+  }
+
+  function teken() {
     var filters = huidigeFilters();
     var zichtbaar = [];
     rijen.forEach(function (rij) {
-      var zichtbaarNu = past(rij, filters, null);
-      rij.hidden = !zichtbaarNu;
-      if (zichtbaarNu) zichtbaar.push(rij);
+      var pastNu = past(rij, filters, null);
+      rij.hidden = !pastNu;
+      if (pastNu) zichtbaar.push(rij);
     });
 
     werkOptiesBij(filters);
     var aantalFilters = werkChipsBij(filters);
     sorteer(zichtbaar);
+
+    /* Afkappen pas ná het sorteren, anders toon je de eerste 25 van de vórige volgorde. Staat de
+       knop niet in de HTML (een pagina van vóór deze wijziging), dan niet afkappen — anders werd
+       de rest van de lijst onbereikbaar. */
+    if (meerKnop) {
+      zichtbaar.forEach(function (rij, i) { rij.hidden = i >= getoond; });
+      var rest = Math.max(zichtbaar.length - getoond, 0);
+      meerKnop.hidden = rest === 0;
+      meerKnop.textContent = 'Toon meer (nog ' + rest + ')';
+    }
 
     var woord = totaal === 1 ? 'wijn' : 'wijnen';
     tellingVak.textContent = aantalFilters === 0
@@ -184,6 +211,12 @@
   document.querySelectorAll('[data-wis-alles]').forEach(function (knop) {
     knop.addEventListener('click', wisAlles);
   });
+  if (meerKnop) {
+    meerKnop.addEventListener('click', function () {
+      getoond += BATCH;
+      teken();
+    });
+  }
 
   pasHashToe();
   ververs();
