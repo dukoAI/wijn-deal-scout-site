@@ -143,6 +143,8 @@ function wdsWisselThema() {
     var form = overlay.querySelector('[data-feedback-form]');
     if (bedankt && !bedankt.hidden) {
       bedankt.hidden = true;
+      var vraag = overlay.querySelector('.feedback-titel');
+      if (vraag) vraag.hidden = false;
       if (form) {
         form.hidden = false;
         form.reset();
@@ -189,6 +191,8 @@ function wdsWisselThema() {
 
   function bedanktTonen() {
     var bedankt = overlay.querySelector('[data-feedback-bedankt]');
+    var vraag = overlay.querySelector('.feedback-titel');
+    if (vraag) vraag.hidden = true;  // "Wij horen graag jouw mening!" is nu beantwoord
     form.hidden = true;
     if (status) { status.hidden = true; status.textContent = ''; }
     if (bedankt) bedankt.hidden = false;

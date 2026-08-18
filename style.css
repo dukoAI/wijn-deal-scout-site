@@ -813,11 +813,21 @@ a:hover {
     margin: 0.2rem 0 0;
     font-size: 0.85rem;
     line-height: 1.55;
-    color: var(--muted);
+    /* --text, niet --muted: op de warme --cta-bg van dit vak haalt --muted in donker thema maar
+       4,12 : 1 (gemeten 18 augustus 2026), onder de 4,5 van WCAG AA. Op de lichtere kaart van het
+       feedbackvenster mag --muted wel. Het rangverschil met de titel zit hier in de serif en de
+       grootte, niet in de kleur. */
+    color: var(--text);
     text-wrap: pretty;
 }
 
 .nieuwsbrief-leeslink {
+    /* block, niet inline-block: als inline element loopt de link achter de laatste zin aan en
+       trekt hij de regelafstand van die alinea scheef. */
+    display: block;
+    width: fit-content;
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
     color: var(--accent);
     text-decoration: none;
     border-bottom: 1px solid transparent;
