@@ -761,9 +761,9 @@ a:hover {
     color: var(--text);
 }
 
-/* Derde versie op één dag (18 augustus 2026) — zie _nieuwsbrief_vak() in genereer_site.py voor
-   de volledige geschiedenis (eigen fetch()-formulier → Buttondowns iframe-embed → dit). Eigen
-   <form>, dus eigen styling; de bevestiging zelf verschijnt in een Buttondown-popup. */
+/* Vierde versie (18 augustus 2026) — zie _nieuwsbrief_vak() in genereer_site.py voor de
+   volledige geschiedenis. Eigen <form> dat als JSON naar Formspree POST't, met de bevestiging
+   inline op de pagina in plaats van in een popup of iframe. */
 .nieuwsbrief-form {
     display: flex;
     gap: 0.5rem;
@@ -803,6 +803,46 @@ a:hover {
 
 .nieuwsbrief-form button:hover {
     opacity: 0.9;
+}
+
+/* Het formulier verdwijnt na een geslaagde aanmelding (nbForm.hidden in _scripts()). Zonder
+   deze guard verliest [hidden] van de display:flex hierboven en blijft het gewoon staan —
+   zelfde valkuil als bij .feedback-overlay en .kb-rij. */
+.nieuwsbrief-form[hidden] {
+    display: none;
+}
+
+.nieuwsbrief-status {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin: 0.75rem 0 0;
+}
+
+/* Bevestiging na aanmelden: vervangt het formulier en blijft staan (in tegenstelling tot het
+   feedbackvenster, dat vanzelf sluit — hier is er geen venster om te sluiten). */
+.nieuwsbrief-bedankt {
+    display: flex;
+    gap: 0.6rem;
+    align-items: flex-start;
+    margin-top: 0.25rem;
+}
+
+.nieuwsbrief-bedankt[hidden] {
+    display: none;
+}
+
+.nieuwsbrief-bedankt-titel {
+    font-family: var(--serif);
+    font-size: 1.05rem;
+    margin: 0;
+    color: var(--text);
+}
+
+.nieuwsbrief-bedankt-tekst {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: var(--muted);
+    margin: 0.25rem 0 0;
 }
 
 .nieuwsbrief-leeslink {
