@@ -372,6 +372,16 @@ a:hover {
     line-height: 1;
 }
 
+/* Aantal beoordelingen achter de score. Kleiner en gedempt: het is context bij het cijfer,
+   geen tweede cijfer. Zonder dit getal betekent een 4,0 uit 80 stemmen hetzelfde als een 4,0
+   uit 17.449, en dat is precies het verschil dat een lezer nodig heeft. Staat er niet als we
+   het aantal niet hebben — nooit een placeholder. */
+.wijn-bron-aantal {
+    font-size: 0.72rem;
+    color: var(--muted);
+    margin-left: 0.3rem;
+}
+
 .wijn-bron-label {
     font-size: 0.72rem;
     color: var(--muted);
@@ -751,6 +761,9 @@ a:hover {
     color: var(--text);
 }
 
+/* Derde versie op één dag (18 augustus 2026) — zie _nieuwsbrief_vak() in genereer_site.py voor
+   de volledige geschiedenis (eigen fetch()-formulier → Buttondowns iframe-embed → dit). Eigen
+   <form>, dus eigen styling; de bevestiging zelf verschijnt in een Buttondown-popup. */
 .nieuwsbrief-form {
     display: flex;
     gap: 0.5rem;
@@ -792,57 +805,10 @@ a:hover {
     opacity: 0.9;
 }
 
-/* Het formulier verdwijnt zodra de aanmelding gelukt is. .nieuwsbrief-form heeft
-   display: flex, en dat wint van het [hidden] van de browser — zonder deze guard blijft het
-   formulier naast de bevestiging staan. Zelfde valkuil als .feedback-overlay en .kb-rij. */
-.nieuwsbrief-form[hidden] {
-    display: none;
-}
-
-.nieuwsbrief-fout {
-    margin: 0.65rem 0 0;
-    font-size: 0.82rem;
-    line-height: 1.45;
-    color: var(--accent);
-}
-
-/* Bevestiging na aanmelden: komt op de plek van het formulier, dus het vak springt niet. */
-.nieuwsbrief-bedankt {
-    display: flex;
-    gap: 0.55rem;
-    align-items: flex-start;
-    min-height: 42px;
-}
-
-.nieuwsbrief-bedankt[hidden] {
-    display: none;
-}
-
-.nieuwsbrief-bedankt-titel {
-    font-family: var(--serif);
-    font-size: 1rem;
-    margin: 0;
-    color: var(--text);
-}
-
-.nieuwsbrief-bedankt-tekst {
-    margin: 0.2rem 0 0;
-    font-size: 0.85rem;
-    line-height: 1.55;
-    /* --text, niet --muted: op de warme --cta-bg van dit vak haalt --muted in donker thema maar
-       4,12 : 1 (gemeten 18 augustus 2026), onder de 4,5 van WCAG AA. Op de lichtere kaart van het
-       feedbackvenster mag --muted wel. Het rangverschil met de titel zit hier in de serif en de
-       grootte, niet in de kleur. */
-    color: var(--text);
-    text-wrap: pretty;
-}
-
 .nieuwsbrief-leeslink {
-    /* block, niet inline-block: als inline element loopt de link achter de laatste zin aan en
-       trekt hij de regelafstand van die alinea scheef. */
     display: block;
     width: fit-content;
-    margin-top: 0.5rem;
+    margin-top: 0.75rem;
     font-size: 0.85rem;
     color: var(--accent);
     text-decoration: none;

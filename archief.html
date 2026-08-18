@@ -44,59 +44,16 @@
 <div class="editie-rij-link">Bekijk deze editie &rarr;</div>
 </div>
 </div>
-</a><a class="editie-rij" href="editie-2026-08-05.html">
-<div class="editie-rij-binnen">
-<div class="editie-rij-links">
-<div class="editie-rij-datum">5 augustus 2026</div>
-<p class="editie-rij-samenvatting">Deze week: 3 wijnen die de moeite waard zijn</p>
-<div class="editie-rij-types"><img class="fles-icoon fles-icoon--klein" src="assets/icons/fles-rood.svg" alt="" loading="lazy"><img class="fles-icoon fles-icoon--klein" src="assets/icons/fles-rood.svg" alt="" loading="lazy"><img class="fles-icoon fles-icoon--klein" src="assets/icons/fles-rose.svg" alt="" loading="lazy"></div>
-</div>
-<div class="editie-rij-rechts">
-<div class="editie-rij-score-label">Hoogste score</div><div class="editie-rij-score-waarde">9<span class="editie-rij-score-suffix">/10</span></div>
-<div class="editie-rij-link">Bekijk deze editie &rarr;</div>
-</div>
-</div>
-</a><a class="editie-rij" href="editie-2026-07-30.html">
-<div class="editie-rij-binnen">
-<div class="editie-rij-links">
-<div class="editie-rij-datum">30 juli 2026</div>
-<p class="editie-rij-samenvatting">Deze week: 3 wijnen die de moeite waard zijn</p>
-
-</div>
-<div class="editie-rij-rechts">
-<div class="editie-rij-score-label">Hoogste score</div><div class="editie-rij-score-waarde">8<span class="editie-rij-score-suffix">/10</span></div>
-<div class="editie-rij-link">Bekijk deze editie &rarr;</div>
-</div>
-</div>
-</a><a class="editie-rij" href="editie-2026-07-28.html">
-<div class="editie-rij-binnen">
-<div class="editie-rij-links">
-<div class="editie-rij-datum">28 juli 2026</div>
-<p class="editie-rij-samenvatting">Deze week: 4 wijnen die de moeite waard zijn</p>
-
-</div>
-<div class="editie-rij-rechts">
-<div class="editie-rij-score-label">Hoogste score</div><div class="editie-rij-score-waarde">9<span class="editie-rij-score-suffix">/10</span></div>
-<div class="editie-rij-link">Bekijk deze editie &rarr;</div>
-</div>
-</div>
 </a>
 </div>
 <div class="nieuwsbrief-vak">
 <div class="nieuwsbrief-tekst">Elke vrijdag in je inbox</div>
-<form action="https://buttondown.com/api/emails/embed-subscribe/duko" method="post" class="nieuwsbrief-form" data-aanmeld-form>
+<form action="https://buttondown.com/api/emails/embed-subscribe/duko" method="post" target="popupwindow" onsubmit="window.open('https://buttondown.com/duko', 'popupwindow')" class="nieuwsbrief-form">
 <input type="email" name="email" placeholder="jij@voorbeeld.nl" required>
 <input type="hidden" value="1" name="embed">
 <button type="submit">Meld je aan</button>
 </form>
-<p class="nieuwsbrief-fout" data-aanmeld-fout role="alert" hidden></p>
-<div class="nieuwsbrief-bedankt" data-aanmeld-bedankt hidden>
-<span class="bevestig-vink" aria-hidden="true"><svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l4 4 8-9"/></svg></span>
-<div>
-<p class="nieuwsbrief-bedankt-titel">Bedankt voor je aanmelding!</p>
-<p class="nieuwsbrief-bedankt-tekst">Klik nog even de bevestigingslink in de mail die je zo krijgt. Eerstvolgende editie: vrijdag. <a class="nieuwsbrief-leeslink" href="index.html">Lees de nieuwste editie →</a></p>
-</div>
-</div>
+<a class="nieuwsbrief-leeslink" href="index.html">Lees de nieuwste editie →</a>
 </div>
 <div class="retailer-balk">
 <div class="retailer-balk-label">We scannen aanbiedingen bij</div>
@@ -235,40 +192,6 @@ function wdsWisselThema() {
       knop.disabled = false;
       status.hidden = false;
       status.textContent = 'Versturen lukte niet. Probeer het later nog eens.';
-    });
-  });
-
-  // Nieuwsbriefaanmelding: POST naar Buttondown zonder de pagina te verlaten, en het formulier
-  // op zijn plek vervangen door de bevestiging. Zonder JavaScript gebeurt hier niets en doet de
-  // gewone formulier-POST zijn werk (dan handelt Buttondown het op zijn eigen pagina af).
-  var aanmeld = document.querySelector('[data-aanmeld-form]');
-  if (aanmeld) aanmeld.addEventListener('submit', function (e) {
-    e.preventDefault();
-    var vak = aanmeld.parentNode;
-    var fout = vak.querySelector('[data-aanmeld-fout]');
-    var bedankt = vak.querySelector('[data-aanmeld-bedankt]');
-    var knop = aanmeld.querySelector('button[type="submit"]');
-    var veld = aanmeld.querySelector('input[type="email"]');
-    var knoptekst = knop.textContent;
-    fout.hidden = true;
-    knop.disabled = true;
-    knop.textContent = 'Bezig…';
-    fetch(aanmeld.action, {
-      method: 'POST',
-      // Geen JSON: dit contenttype maakt het een 'simple request', dus zonder preflight.
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: 'embed=1&email=' + encodeURIComponent(veld.value)
-    }).then(function (r) {
-      if (!r.ok) throw r;
-      aanmeld.hidden = true;
-      bedankt.hidden = false;
-    }).catch(function (r) {
-      knop.disabled = false;
-      knop.textContent = knoptekst;
-      fout.hidden = false;
-      fout.textContent = (r && r.status === 400)
-        ? 'Dit adres konden we niet toevoegen — mogelijk sta je al op de lijst.'
-        : 'Aanmelden lukte even niet. Probeer het zo nog eens.';
     });
   });
 })();
