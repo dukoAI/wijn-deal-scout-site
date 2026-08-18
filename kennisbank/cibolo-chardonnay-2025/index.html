@@ -92,7 +92,7 @@
 <p class="feedback-titel" id="feedback-titel">Wij horen graag jouw mening!</p>
 <form class="feedback-form" data-feedback-form>
 <textarea name="bericht" rows="6" required aria-label="Jouw feedback" placeholder="Bijvoorbeeld: meer witte wijn, of vaker iets onder de acht euro…"></textarea>
-<button class="feedback-verstuur" type="submit">Versturen</button>
+<p class="feedback-notitie">Dit formulier is nog niet aangesloten op een verzendadres, dus versturen doet op dit moment nog niets.</p><button class="feedback-verstuur" type="submit" disabled>Versturen</button>
 </form>
 <p class="feedback-status" data-feedback-status role="status" hidden></p>
 <div class="feedback-bedankt" data-feedback-bedankt hidden>
@@ -114,7 +114,7 @@ function wdsWisselThema() {
 
 (function () {
   var endpoint = null;
-  var zonderBestemming = true;
+  var zonderBestemming = false;
   var SLUIT_NA_BEDANKT = 2500;  // ms; 0 laat het venster openstaan tot de bezoeker zelf sluit
   var overlay = document.querySelector('[data-feedback-overlay]');
   var status = document.querySelector('[data-feedback-status]');

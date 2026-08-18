@@ -245,8 +245,19 @@ a:hover {
     padding: 1.25rem 0 1.1rem;
 }
 
+/* Ruimte ná de bestelknop. Zonder dit stond het prijsblok op 17px van zijn eigen tekst en op
+   18px van de volgende wijn — even ver van allebei, en dan leest de prijs als de kop van de
+   wijn eronder in plaats van als afsluiting van de wijn erboven. Viel op bij een uitgeklapte
+   (lange) beoordeling op mobiel; zit ook in het v4-ontwerp, maar valt daar niet op omdat de
+   punchline in het ontwerp kort is. Niet op de laatste kaart: daar volgt het kennisbankvak,
+   dat zijn eigen marge meebrengt. */
+.wijn-kaart:not(:last-child) {
+    padding-bottom: 2.4rem;
+}
+
 /* Scheiding tússen de kaarten, niet boven de eerste: de sectiekop heeft daar al een streep. */
 .wijn-kaart + .wijn-kaart {
+    padding-top: 1.6rem;
     border-top: 1px solid var(--divider);
 }
 
@@ -512,9 +523,14 @@ a:hover {
     justify-content: space-between;
     gap: 1rem;
     flex-wrap: wrap;
-    margin-top: 1.5rem;
-    padding-top: 1rem;
-    border-top: 1px solid var(--divider);
+    /* Bewust GEEN lijn boven de prijs (keuze Duko, 18 augustus 2026). Het ontwerp had er een,
+       maar die was even zwaar als de lijn tussen twee wijnen — en dan zweeft het prijsblok
+       tussen twee identieke strepen en leest het als de kop van de wijn eronder. Nu blijft er
+       één lijnsoort op de pagina over, die altijd "nieuwe wijn" betekent; het prijsblok wordt
+       gegroepeerd door ruimte (weinig erboven, veel eronder — zie .wijn-kaart:not(:last-child)),
+       niet door een streep. Zet je hier ooit weer een border-top neer, maak hem dan lichter dan
+       var(--divider) en controleer het met een uitgeklapte beoordeling op 390px. */
+    margin-top: 1.4rem;
 }
 
 .wijn-winkel {
