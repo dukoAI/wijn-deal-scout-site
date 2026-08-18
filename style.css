@@ -73,39 +73,53 @@ body {
     padding: 2.5rem 1.5rem 4.5rem;
 }
 
-/* Wordmark + header rij (edition & index) */
+/* ----------------------------------------------------------------
+   Paginakop: navigatiebalk bovenaan, wordmark eronder, dan de ondertitel.
+   Eén vorm voor alle paginasoorten (_paginakop() in genereer_site.py),
+   naar ontwerp "Wijn Deal Scout v4" (17 augustus 2026).
+   ---------------------------------------------------------------- */
+.topbalk {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--divider);
+}
+
+.topbalk-acties {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+}
+
 .wordmark {
+    display: block;
     font-family: var(--serif);
-    font-size: 1.65rem;
+    font-size: 2.05rem;
     font-weight: 500;
+    line-height: 1.1;
     letter-spacing: 0.01em;
     color: var(--text);
     text-decoration: none;
+    margin-top: 1.15rem;
 }
 
-.header-rij {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: 0.75rem;
-    margin-top: 0.5rem;
-    flex-wrap: wrap;
-}
-
-.editie-eyebrow,
-.site-tagline {
+.kop-ondertitel {
     font-size: 0.75rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--muted);
-    margin: 0;
+    margin: 0.4rem 0 0;
 }
 
 .header-links {
     display: flex;
     align-items: center;
-    gap: 0.9rem;
-    font-size: 0.8rem;
+    gap: 0.4rem;
+    font-size: 0.75rem;
+    color: var(--muted);
 }
 
 .header-links a {
@@ -113,8 +127,36 @@ body {
     text-decoration: none;
 }
 
+.header-links a:not(:last-child)::after {
+    content: "·";
+    margin-left: 0.4rem;
+    color: var(--divider);
+}
+
 .header-links a:hover {
     color: var(--accent);
+}
+
+/* Feedbackknop in de topbalk. Zie FEEDBACK_ENDPOINT in genereer_site.py: zolang die None is
+   opent het venster wel, maar staat de verzendknop uit. */
+.feedback-knop {
+    display: inline-flex;
+    align-items: center;
+    min-height: 32px;
+    padding: 0 0.75rem;
+    border: 1px solid var(--divider);
+    border-radius: 2px;
+    background: var(--card);
+    font-family: var(--sans);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--accent-strong);
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.feedback-knop:hover {
+    border-color: var(--accent);
 }
 
 .theme-toggle {
@@ -166,18 +208,31 @@ a:hover {
     font-style: italic;
     font-size: 1.15rem;
     line-height: 1.55;
-    margin: 0 0 1rem;
+    margin: 1rem 0 0;
     color: var(--text);
+    text-wrap: pretty;
 }
 
-/* Eyebrow-labels boven secties */
-.sectie-eyebrow {
-    font-size: 0.72rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--accent);
-    font-weight: 600;
-    margin: 2rem 0 0.25rem;
+/* Voorraadregel onder de intro. Een aanbieding kan weg zijn tegen de tijd dat iemand het
+   archief leest; dit zegt dat één keer, in plaats van per wijn. */
+.editie-voorraad {
+    font-size: 0.75rem;
+    line-height: 1.5;
+    color: var(--muted);
+    margin: 0.6rem 0 0;
+}
+
+/* Sectiekop: serif, met een streep erboven die de secties uit elkaar houdt. Verving op
+   17 augustus 2026 het kleine kleinkapitaal-label (.sectie-eyebrow) uit het oude ontwerp. */
+.sectie-kop {
+    font-family: var(--serif);
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 1.2;
+    margin: 2.4rem 0 0;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--divider);
+    text-wrap: pretty;
 }
 
 /* Top-3 lijst (vloeiende rijen i.p.v. kaders) */
@@ -187,7 +242,11 @@ a:hover {
 }
 
 .wijn-kaart {
-    padding: 1.25rem 0;
+    padding: 1.25rem 0 1.1rem;
+}
+
+/* Scheiding tússen de kaarten, niet boven de eerste: de sectiekop heeft daar al een streep. */
+.wijn-kaart + .wijn-kaart {
     border-top: 1px solid var(--divider);
 }
 
@@ -227,11 +286,12 @@ a:hover {
     margin-top: 0;
 }
 
-/* Terugval in de top-3-kaart als er geen foto is: even hoog als .wijn-foto (84px), zodat de
-   kaartkop niet springt tussen wijnen met en zonder foto. */
+/* Terugval in de top-3-kaart als er geen foto is: even hoog als .wijn-foto (104px), zodat de
+   kaartkop niet springt tussen wijnen met en zonder foto. Hoogte mee omhoog met de kaart, die
+   sinds ontwerp v4 ook de bronnenregel bevat. */
 .fles-icoon--kaart {
-    width: 28px;
-    height: 84px;
+    width: 35px;
+    height: 104px;
     margin-top: 0;
 }
 
@@ -259,11 +319,58 @@ a:hover {
     margin-top: 4px;
 }
 
+/* Bronnenregel: de externe scores die we echt hebben (Vivino, Wine-Searcher), gescheiden door een
+   dun verticaal streepje. Zie _bronnen_html() in genereer_site.py voor waar de cijfers vandaan
+   komen; een bron die we niet hebben laat gewoon geen gat achter.
+
+   De scheiding is een border-left op ELKE bron, niet alleen op de tweede en verder. Reden: op een
+   smal scherm breekt deze regel af (op 390px past "4,1 Vivino | 87/100 Wine-Searcher" niet), en
+   dan zou de bron die als eerste op de nieuwe regel komt zijn streepje als los liggend streepje
+   vooraan tonen. CSS kan niet zien of iets aan het begin van een regel staat, dus in plaats
+   daarvan:
+     - elke bron schuift 1px naar links (margin-left), zodat zijn streepje net buiten de
+       container valt als hij aan het begin van een regel staat;
+     - overflow: hidden knipt dat weg — zowel bij de eerste bron als bij elke afgebroken regel;
+     - de container schuift een padding naar links, zodat de eerste waarde weer uitlijnt met de
+       wijnnaam erboven.
+   Bij een bron middenin een regel valt het streepje wél binnen de container en blijft het staan.
+   Haal je een van deze drie regels weg, dan komt het losse streepje terug. */
+.wijn-bronnen {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    row-gap: 0.5rem;
+    margin-top: 0.85rem;
+    margin-left: -0.85rem;
+    overflow: hidden;
+}
+
+.wijn-bron {
+    display: flex;
+    align-items: baseline;
+    gap: 0.35rem;
+    padding: 0 0.85rem;
+    margin-left: -1px;
+    border-left: 1px solid var(--divider);
+}
+
+.wijn-bron-waarde {
+    font-family: var(--serif);
+    font-size: 1.05rem;
+    font-weight: 500;
+    line-height: 1;
+}
+
+.wijn-bron-label {
+    font-size: 0.72rem;
+    color: var(--muted);
+}
+
 /* Foto van de top-3-wijn (transparante achtergrond, zie wijnfoto.py) — zelfde
    buitenmaten als het flesicoon zodat de kop niet springt tussen wijnen met/zonder foto. */
 .wijn-foto {
     width: 42px;
-    height: 84px;
+    height: 104px;
     flex-shrink: 0;
     overflow: hidden;
     border-radius: 4px;
@@ -283,16 +390,24 @@ a:hover {
     background: var(--highlight);
 }
 
-.bestel-winkel {
-    font-weight: 700;
-}
-
-.kop-score-prijs {
+/* Score rechtsboven in de kaart, met het label eronder. De prijs stond hier vroeger ook;
+   die is naar de voetregel van de kaart verhuisd (ontwerp v4), waar hij naast de bestelknop
+   staat — daar neemt de lezer de beslissing. */
+.kop-score {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    gap: 3px;
     margin-left: auto;
+    flex: none;
+    white-space: nowrap;
+}
+
+.score-label {
+    font-size: 0.66rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 0.35rem;
 }
 
 .score-badge {
@@ -314,25 +429,72 @@ a:hover {
     color: var(--muted);
 }
 
+/* De kaartscore is het grootste cijfer op de pagina en heeft de accentkleur, zodat hij niet
+   concurreert met de wijnnaam ernaast. Op de kennisbankpagina's blijft .score-badge in de
+   tekstkleur staan — daar is het één van meer gegevens, niet de kop van een aanbeveling. */
+.score-badge--kaart .score-num {
+    font-size: 2.1rem;
+    color: var(--accent-strong);
+}
+
 .prijs-rij {
     display: flex;
     align-items: baseline;
-    gap: 6px;
+    gap: 7px;
 }
 
 .prijs-oud {
     text-decoration: line-through;
     color: var(--muted);
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     opacity: 0.75;
 }
 
 .prijs-nieuw {
+    font-family: var(--serif);
     color: var(--accent-strong);
-    font-weight: 700;
-    font-size: 0.95rem;
+    font-weight: 500;
+    font-size: 1.5rem;
+    line-height: 1.1;
 }
 
+/* Punchline: de korte reden waarom deze fles nu de moeite waard is. De uitgebreide beoordeling
+   staat eronder, dicht, achter .wijn-uitklap. */
+.wijn-punchline p {
+    font-family: var(--serif);
+    font-size: 1.05rem;
+    line-height: 1.55;
+    margin: 1.4rem 0 0;
+    text-wrap: pretty;
+}
+
+.wijn-uitklap {
+    display: block;
+    margin-top: 0.65rem;
+    padding: 0;
+    background: none;
+    border: none;
+    font-family: var(--sans);
+    font-size: 0.82rem;
+    color: var(--accent);
+    cursor: pointer;
+    text-align: left;
+}
+
+.wijn-uitklap:hover {
+    color: var(--accent-strong);
+}
+
+.wijn-beoordeling p {
+    font-family: var(--serif);
+    font-size: 1rem;
+    line-height: 1.65;
+    margin: 0.9rem 0 0;
+    text-wrap: pretty;
+}
+
+/* Lopende beoordelingstekst op de kennisbank-detailpagina (_onderbouwing_html()). Staat hier
+   los van .wijn-beoordeling hierboven: dat is de uitklaptekst op de editiepagina. */
 .wijn-tekst p {
     margin: 0 0 0.9rem;
     font-size: 0.95rem;
@@ -343,38 +505,95 @@ a:hover {
     margin-bottom: 0;
 }
 
-.bestel-link {
-    display: inline-block;
-    margin-top: 0.75rem;
-    font-size: 0.8rem;
+/* Voetregel van de kaart: prijs + winkel links, bestelknop rechts. */
+.wijn-voet {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--divider);
+}
+
+.wijn-winkel {
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-top: 3px;
+}
+
+.bestel-knop {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    min-height: 46px;
+    padding: 0 1.25rem;
+    background: var(--highlight);
+    border: 1px solid var(--accent-strong);
+    border-radius: 2px;
+    font-size: 0.88rem;
     font-weight: 600;
-    color: var(--accent);
+    color: var(--accent-strong);
     text-decoration: none;
 }
 
-.bestel-link:hover {
+.bestel-knop:hover {
+    background: var(--cta-bg);
     color: var(--accent-strong);
 }
 
-/* Overig-sectie */
-.overig-sectie {
-    margin-top: 1rem;
+/* "Bekijk ook"-vak: verwijzing naar de kennisbank, tussen de top 3 en de overige aanraders. */
+.kennisbank-vak {
+    display: block;
+    background: var(--card);
+    border: 1px solid var(--divider);
+    border-radius: 2px;
+    padding: 1.1rem 1.25rem;
+    margin-top: 2.1rem;
 }
 
-.overig-sectie h2 {
-    font-family: var(--sans);
-    font-size: 0.72rem;
+.kennisbank-vak-eyebrow {
+    font-size: 0.66rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--muted);
     font-weight: 600;
-    margin: 2rem 0 0.25rem;
+}
+
+.kennisbank-vak p {
+    font-family: var(--serif);
+    font-size: 1.05rem;
+    line-height: 1.5;
+    margin: 0.45rem 0 0;
+    text-wrap: pretty;
+}
+
+.kennisbank-vak p + p {
+    margin-top: 0.25rem;
+}
+
+.kennisbank-vak-link {
+    display: inline-block;
+    margin-top: 0.65rem;
+    font-size: 0.92rem;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+/* Overig-sectie */
+.overig-sectie {
+    margin-top: 0;
 }
 
 .overig-lijst {
     list-style: none;
     margin: 0;
     padding: 0;
+}
+
+.overig-sectie .overig-lijst {
+    margin-top: 0.9rem;
 }
 
 .overig-lijst li {
@@ -485,21 +704,18 @@ a:hover {
     font-size: 0.82rem;
 }
 
-/* Op smalle schermen duwt een lange wijnnaam (2 regels) de score/prijs-kolom
-   scheef omhoog, met veel lege ruimte ernaast. Stapel de kop dan i.p.v.
-   ernaast te dwingen. */
+/* De scorekolom is sinds ontwerp v4 alleen nog het cijfer met zijn label — de prijs staat in de
+   voetregel van de kaart. Daardoor past hij op smalle schermen gewoon naast de titel en hoeft de
+   kop niet meer gestapeld te worden (dat deed de oude .kop-score-prijs wel). Wat wél nodig blijft:
+   de bestelknop over de volle breedte, anders staat hij op 320px half naast de prijs geklemd. */
 @media (max-width: 420px) {
-    .wijn-kaart-kop {
-        flex-direction: column;
-        align-items: flex-start;
+    .wijn-voet {
+        gap: 0.9rem;
     }
 
-    .kop-score-prijs {
-        flex-direction: row;
-        align-items: baseline;
-        margin-left: 0;
-        margin-top: 0.6rem;
-        gap: 10px;
+    .bestel-knop {
+        width: 100%;
+        justify-content: center;
     }
 }
 
@@ -540,7 +756,12 @@ a:hover {
 .nieuwsbrief-form button {
     border: none;
     background: var(--accent-strong);
-    color: oklch(98% 0 0);
+    /* var(--bg) en niet een vaste bijna-witte kleur: --accent-strong is in licht thema een
+       donkerrood, maar in donker thema juist een LICHTE zalmkleur. Wit daarop gaf 1,85 : 1
+       (gemeten 17 augustus 2026) — praktisch onleesbaar. Door de paginakleur te gebruiken
+       draait de tekst mee met het thema en blijft het contrast in beide richtingen kloppen.
+       Zelfde patroon als .kb-bestel-knop verderop. */
+    color: var(--bg);
     padding: 0 1.2rem;
     font-size: 0.9rem;
     font-weight: 600;
@@ -553,6 +774,72 @@ a:hover {
 
 .nieuwsbrief-form button:hover {
     opacity: 0.9;
+}
+
+/* Het formulier verdwijnt zodra de aanmelding gelukt is. .nieuwsbrief-form heeft
+   display: flex, en dat wint van het [hidden] van de browser — zonder deze guard blijft het
+   formulier naast de bevestiging staan. Zelfde valkuil als .feedback-overlay en .kb-rij. */
+.nieuwsbrief-form[hidden] {
+    display: none;
+}
+
+.nieuwsbrief-fout {
+    margin: 0.65rem 0 0;
+    font-size: 0.82rem;
+    line-height: 1.45;
+    color: var(--accent);
+}
+
+/* Bevestiging na aanmelden: komt op de plek van het formulier, dus het vak springt niet. */
+.nieuwsbrief-bedankt {
+    display: flex;
+    gap: 0.55rem;
+    align-items: flex-start;
+    min-height: 42px;
+}
+
+.nieuwsbrief-bedankt[hidden] {
+    display: none;
+}
+
+.nieuwsbrief-bedankt-titel {
+    font-family: var(--serif);
+    font-size: 1rem;
+    margin: 0;
+    color: var(--text);
+}
+
+.nieuwsbrief-bedankt-tekst {
+    margin: 0.2rem 0 0;
+    font-size: 0.85rem;
+    line-height: 1.55;
+    color: var(--muted);
+    text-wrap: pretty;
+}
+
+.nieuwsbrief-leeslink {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    white-space: nowrap;
+}
+
+.nieuwsbrief-leeslink:hover {
+    border-bottom-color: currentColor;
+}
+
+/* Het vinkje van beide bevestigingen (aanmelden en feedback). currentColor, dus één regel
+   kleur op de ouder is genoeg. */
+.bevestig-vink {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--card);
+    color: var(--accent);
 }
 
 /* Retailer-balk */
@@ -593,6 +880,176 @@ a:hover {
     height: auto;
     object-fit: contain;
     display: block;
+}
+
+/* ----------------------------------------------------------------
+   Voettekst: dezelfde navigatie als bovenaan, plus de feedbackknop.
+   ---------------------------------------------------------------- */
+.paginavoet {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-top: 2.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--divider);
+}
+
+.voet-feedback {
+    background: none;
+    border: none;
+    padding: 0;
+    font-family: var(--sans);
+    font-size: 0.75rem;
+    color: var(--accent);
+    cursor: pointer;
+}
+
+.voet-feedback:hover {
+    color: var(--accent-strong);
+}
+
+/* ----------------------------------------------------------------
+   Feedbackvenster (modaal). De inhoud staat op elke pagina in de HTML en is dicht met het
+   hidden-attribuut; _scripts() in genereer_site.py zet dat aan en uit.
+   ---------------------------------------------------------------- */
+.feedback-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    background: color-mix(in oklab, var(--text) 45%, transparent);
+}
+
+/* Zelfde valkuil als bij .kb-rij[hidden] en .kb-zoekbalk[hidden] verderop: de browserregel
+   [hidden] { display: none } is minder specifiek dan .feedback-overlay { display: flex }
+   hierboven. Zonder deze regel staat het feedbackvenster op élke pagina permanent open. */
+.feedback-overlay[hidden] {
+    display: none;
+}
+
+.feedback-kaart {
+    width: 100%;
+    max-width: 440px;
+    background: var(--card);
+    border: 1px solid var(--divider);
+    border-radius: 2px;
+    padding: 1.5rem;
+}
+
+.feedback-kaart-kop {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.75rem;
+}
+
+.feedback-eyebrow {
+    font-size: 0.66rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 600;
+}
+
+.feedback-sluit {
+    background: none;
+    border: none;
+    padding: 0;
+    font-family: var(--sans);
+    font-size: 0.78rem;
+    color: var(--muted);
+    cursor: pointer;
+}
+
+.feedback-sluit:hover {
+    color: var(--accent);
+}
+
+.feedback-titel {
+    font-family: var(--serif);
+    font-size: 1.15rem;
+    line-height: 1.45;
+    margin: 0.5rem 0 0;
+    text-wrap: pretty;
+}
+
+.feedback-form textarea {
+    display: block;
+    width: 100%;
+    min-height: 150px;
+    resize: vertical;
+    margin-top: 0.9rem;
+    padding: 0.75rem;
+    border: 1px solid var(--divider);
+    border-radius: 2px;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 0.9rem;
+}
+
+.feedback-notitie {
+    font-size: 0.78rem;
+    line-height: 1.45;
+    color: var(--muted);
+    margin: 0.7rem 0 0;
+}
+
+.feedback-verstuur {
+    min-height: 44px;
+    margin-top: 0.9rem;
+    padding: 0 1.15rem;
+    border: 1px solid var(--accent-strong);
+    border-radius: 2px;
+    background: var(--cta-bg);
+    color: var(--accent-strong);
+    font-family: var(--sans);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.feedback-verstuur:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.feedback-status {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin: 0.9rem 0 0;
+}
+
+/* Bevestiging in het feedbackvenster. Vervangt het formulier; het venster sluit daarna vanzelf
+   (SLUIT_NA_BEDANKT in _scripts()), en bij heropenen zet open() alles terug op het formulier. */
+.feedback-bedankt {
+    display: flex;
+    gap: 0.6rem;
+    align-items: flex-start;
+    margin-top: 1.1rem;
+}
+
+.feedback-bedankt[hidden] {
+    display: none;
+}
+
+.feedback-bedankt-titel {
+    font-family: var(--serif);
+    font-size: 1.05rem;
+    margin: 0;
+    color: var(--text);
+}
+
+.feedback-bedankt-tekst {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: var(--muted);
+    margin: 0.25rem 0 0;
 }
 
 /* Archief-index: editierijen */

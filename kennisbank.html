@@ -18,17 +18,18 @@
 </head>
 <body>
 <div class="pagina">
-<header class="site-header">
-<a class="wordmark" href="index.html">Wijn Deal Scout</a>
-<div class="header-rij">
-<p class="site-tagline">Elke vrijdag de beste wijnaanbiedingen</p>
-<div class="header-links">
-<a href="index.html">Deze week</a> · <a href="archief.html">Archief</a>
+<header>
+<div class="topbalk">
+<nav class="header-links" aria-label="Hoofdnavigatie"><a href="index.html">Deze week</a> · <a href="kennisbank.html">Kennisbank</a> · <a href="archief.html">Archief</a></nav>
+<div class="topbalk-acties">
+<button class="feedback-knop" type="button" data-feedback-open>Feedback</button>
 <button class="theme-toggle" onclick="wdsWisselThema()" aria-label="Wissel licht/donker" type="button">
 <span class="theme-toggle-dot"></span>
 </button>
 </div>
 </div>
+<a class="wordmark" href="index.html">Wijn Deal Scout</a>
+<p class="kop-ondertitel">Elke vrijdag de beste wijnaanbiedingen</p>
 </header>
 <hr>
 <div class="kb-eyebrow">Kennisbank</div>
@@ -211,16 +212,49 @@
 
 <div class="nieuwsbrief-vak">
 <div class="nieuwsbrief-tekst">Elke vrijdag in je inbox</div>
-<form action="https://buttondown.com/api/emails/embed-subscribe/duko" method="post" target="popupwindow" onsubmit="window.open('https://buttondown.com/duko', 'popupwindow')" class="nieuwsbrief-form">
+<form action="https://buttondown.com/api/emails/embed-subscribe/duko" method="post" class="nieuwsbrief-form" data-aanmeld-form>
 <input type="email" name="email" placeholder="jij@voorbeeld.nl" required>
 <input type="hidden" value="1" name="embed">
 <button type="submit">Meld je aan</button>
 </form>
+<p class="nieuwsbrief-fout" data-aanmeld-fout role="alert" hidden></p>
+<div class="nieuwsbrief-bedankt" data-aanmeld-bedankt hidden>
+<span class="bevestig-vink" aria-hidden="true"><svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l4 4 8-9"/></svg></span>
+<div>
+<p class="nieuwsbrief-bedankt-titel">Bedankt voor je aanmelding!</p>
+<p class="nieuwsbrief-bedankt-tekst">Klik nog even de bevestigingslink in de mail die je zo krijgt. Eerstvolgende editie: vrijdag. <a class="nieuwsbrief-leeslink" href="archief.html">Bekijk eerdere edities →</a></p>
+</div>
+</div>
 </div>
 <div class="retailer-balk">
 <div class="retailer-balk-label">We scannen aanbiedingen bij</div>
 <div class="retailer-lijst">
 <div class="retailer-logo-chip"><img class="retailer-logo" src="assets/logos/wijnvoordeel.svg" alt="Wijnvoordeel" loading="lazy"></div><div class="retailer-logo-chip"><img class="retailer-logo" src="assets/logos/grapedistrict.svg" alt="Grape District" loading="lazy"></div><div class="retailer-logo-chip"><img class="retailer-logo" src="assets/logos/henribloem.png" alt="Henri Bloem" loading="lazy"></div><div class="retailer-logo-chip"><img class="retailer-logo" src="assets/logos/vindict.svg" alt="Vindict" loading="lazy"></div><div class="retailer-logo-chip"><img class="retailer-logo" src="assets/logos/hema.svg" alt="Hema" loading="lazy"></div><div class="retailer-logo-chip"><img class="retailer-logo" src="assets/logos/degoudenton.png" alt="De Gouden Ton" loading="lazy"></div><div class="retailer-logo-chip"><img class="retailer-logo" src="assets/logos/grandcru.svg" alt="Grand Cru Wijnen" loading="lazy"></div><div class="retailer-logo-chip"><img class="retailer-logo" src="assets/logos/wijnbeurs.png" alt="Wijnbeurs" loading="lazy"></div><div class="retailer-logo-chip"><img class="retailer-logo" src="assets/logos/dirck3.png" alt="Dirck3" loading="lazy"></div><div class="retailer-logo-chip"><img class="retailer-logo" src="assets/logos/jumbo.png" alt="Jumbo" loading="lazy"></div><div class="retailer-logo-chip"><img class="retailer-logo" src="assets/logos/voordeelwijnen.png" alt="Voordeelwijnen" loading="lazy"></div><div class="retailer-logo-chip"><img class="retailer-logo" src="assets/logos/perfectewijn.webp" alt="Perfecte Wijn" loading="lazy"></div><div class="retailer-logo-chip"><img class="retailer-logo" src="assets/logos/mitra.svg" alt="Mitra" loading="lazy"></div><div class="retailer-logo-chip"><img class="retailer-logo" src="assets/logos/colaris.svg" alt="Colaris" loading="lazy"></div><div class="retailer-logo-chip"><img class="retailer-logo" src="assets/logos/wijnhuis.png" alt="Wijnhuis" loading="lazy"></div><div class="retailer-logo-chip"><img class="retailer-logo" src="assets/logos/drankgigant.png" alt="Drankgigant" loading="lazy"></div><div class="retailer-logo-chip"><img class="retailer-logo" src="assets/logos/dewijnzaak.svg" alt="De Wijnzaak" loading="lazy"></div>
+</div>
+</div>
+<div class="paginavoet">
+<nav class="header-links" aria-label="Navigatie onderaan"><a href="index.html">Deze week</a> · <a href="kennisbank.html">Kennisbank</a> · <a href="archief.html">Archief</a></nav>
+<button class="voet-feedback" type="button" data-feedback-open>Feedback geven</button>
+</div>
+</div>
+<div class="feedback-overlay" data-feedback-overlay hidden>
+<div class="feedback-kaart" role="dialog" aria-modal="true" aria-labelledby="feedback-titel">
+<div class="feedback-kaart-kop">
+<span class="feedback-eyebrow">Denk je mee?</span>
+<button class="feedback-sluit" type="button" data-feedback-sluit>Sluiten</button>
+</div>
+<p class="feedback-titel" id="feedback-titel">Wij horen graag jouw mening!</p>
+<form class="feedback-form" data-feedback-form>
+<textarea name="bericht" rows="6" required aria-label="Jouw feedback" placeholder="Bijvoorbeeld: meer witte wijn, of vaker iets onder de acht euro…"></textarea>
+<button class="feedback-verstuur" type="submit">Versturen</button>
+</form>
+<p class="feedback-status" data-feedback-status role="status" hidden></p>
+<div class="feedback-bedankt" data-feedback-bedankt hidden>
+<span class="bevestig-vink" aria-hidden="true"><svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l4 4 8-9"/></svg></span>
+<div>
+<p class="feedback-bedankt-titel">Bedankt voor je feedback!</p>
+<p class="feedback-bedankt-tekst">We lezen alles wat binnenkomt en nemen het mee in de volgende editie.</p>
+</div>
 </div>
 </div>
 </div>
@@ -231,6 +265,137 @@ function wdsWisselThema() {
   html.setAttribute('data-theme', volgende);
   localStorage.setItem('wds-theme', volgende);
 }
+
+(function () {
+  var endpoint = null;
+  var zonderBestemming = true;
+  var SLUIT_NA_BEDANKT = 2500;  // ms; 0 laat het venster openstaan tot de bezoeker zelf sluit
+  var overlay = document.querySelector('[data-feedback-overlay]');
+  var status = document.querySelector('[data-feedback-status]');
+  var vorigeFocus = null;
+  var sluitTimer = null;
+
+  function open() {
+    if (!overlay) return;
+    vorigeFocus = document.activeElement;
+    // Terug naar het formulier als het venster de vorige keer op "bedankt" bleef staan.
+    var bedankt = overlay.querySelector('[data-feedback-bedankt]');
+    var form = overlay.querySelector('[data-feedback-form]');
+    if (bedankt && !bedankt.hidden) {
+      bedankt.hidden = true;
+      if (form) {
+        form.hidden = false;
+        form.reset();
+        var knop = form.querySelector('button[type="submit"]');
+        if (knop) knop.disabled = false;
+      }
+      if (status) { status.hidden = true; status.textContent = ''; }
+    }
+    overlay.hidden = false;
+    var veld = overlay.querySelector('textarea');
+    if (veld) veld.focus();
+  }
+
+  function sluit() {
+    if (!overlay) return;
+    if (sluitTimer) { clearTimeout(sluitTimer); sluitTimer = null; }
+    overlay.hidden = true;
+    if (vorigeFocus && vorigeFocus.focus) vorigeFocus.focus();
+  }
+
+  document.addEventListener('click', function (e) {
+    if (e.target.closest('[data-feedback-open]')) { open(); return; }
+    if (e.target.closest('[data-feedback-sluit]')) { sluit(); return; }
+    // Klik náást de kaart (dus op de donkere laag zelf) sluit ook.
+    if (overlay && e.target === overlay) sluit();
+
+    // Uitklapbare volledige beoordeling op de editiepagina.
+    var knop = e.target.closest('[data-uitklap]');
+    if (knop) {
+      var doel = document.getElementById(knop.getAttribute('data-uitklap'));
+      if (!doel) return;
+      var open_nu = doel.hidden;
+      doel.hidden = !open_nu;
+      knop.setAttribute('aria-expanded', open_nu ? 'true' : 'false');
+      knop.textContent = open_nu ? 'Minder tekst' : 'Lees de hele beoordeling';
+    }
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && overlay && !overlay.hidden) sluit();
+  });
+
+  var form = document.querySelector('[data-feedback-form]');
+
+  function bedanktTonen() {
+    var bedankt = overlay.querySelector('[data-feedback-bedankt]');
+    form.hidden = true;
+    if (status) { status.hidden = true; status.textContent = ''; }
+    if (bedankt) bedankt.hidden = false;
+    if (SLUIT_NA_BEDANKT) sluitTimer = setTimeout(sluit, SLUIT_NA_BEDANKT);
+  }
+
+  if (form) form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var veld = form.querySelector('textarea');
+    var knop = form.querySelector('button[type="submit"]');
+    if (!endpoint) {
+      // Geen bestemming. Zonder de uitzondering staat de knop uit en komen we hier niet;
+      // met de uitzondering tonen we de bevestiging zonder dat er iets verstuurd wordt.
+      if (zonderBestemming) { knop.disabled = true; bedanktTonen(); }
+      return;
+    }
+    knop.disabled = true;
+    status.hidden = false;
+    status.textContent = 'Versturen…';
+    fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ bericht: veld.value })
+    }).then(function (r) {
+      if (!r.ok) throw new Error(r.status);
+      bedanktTonen();
+    }).catch(function () {
+      knop.disabled = false;
+      status.hidden = false;
+      status.textContent = 'Versturen lukte niet. Probeer het later nog eens.';
+    });
+  });
+
+  // Nieuwsbriefaanmelding: POST naar Buttondown zonder de pagina te verlaten, en het formulier
+  // op zijn plek vervangen door de bevestiging. Zonder JavaScript gebeurt hier niets en doet de
+  // gewone formulier-POST zijn werk (dan handelt Buttondown het op zijn eigen pagina af).
+  var aanmeld = document.querySelector('[data-aanmeld-form]');
+  if (aanmeld) aanmeld.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var vak = aanmeld.parentNode;
+    var fout = vak.querySelector('[data-aanmeld-fout]');
+    var bedankt = vak.querySelector('[data-aanmeld-bedankt]');
+    var knop = aanmeld.querySelector('button[type="submit"]');
+    var veld = aanmeld.querySelector('input[type="email"]');
+    var knoptekst = knop.textContent;
+    fout.hidden = true;
+    knop.disabled = true;
+    knop.textContent = 'Bezig…';
+    fetch(aanmeld.action, {
+      method: 'POST',
+      // Geen JSON: dit contenttype maakt het een 'simple request', dus zonder preflight.
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: 'embed=1&email=' + encodeURIComponent(veld.value)
+    }).then(function (r) {
+      if (!r.ok) throw r;
+      aanmeld.hidden = true;
+      bedankt.hidden = false;
+    }).catch(function (r) {
+      knop.disabled = false;
+      knop.textContent = knoptekst;
+      fout.hidden = false;
+      fout.textContent = (r && r.status === 400)
+        ? 'Dit adres konden we niet toevoegen — mogelijk sta je al op de lijst.'
+        : 'Aanmelden lukte even niet. Probeer het zo nog eens.';
+    });
+  });
+})();
 </script>
 <script src="kennisbank.js"></script>
 </body>
