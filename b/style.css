@@ -46,6 +46,10 @@
     --hover: oklch(91% 0.016 85);
 
     --beoordeling-tekst: oklch(30% 0.012 60);
+    /* De regel naast de prijs op een wijnpagina ("op 9 augustus 2026 bij Wijnvoordeel").
+       Het ontwerp zet daar 38%: een tint donkerder dan --muted-2, zodat die regel iets
+       zwaarder weegt dan de noot eronder — die is wél 42%. */
+    --prijs-context: oklch(38% 0.012 60);
 
     /* Het nieuwsbriefblok is in licht een inktvlak, in donker een iets
        lichter vlak dan de pagina (het ontwerp zet daar 24%). */
@@ -57,9 +61,13 @@
 
     --topbalk: oklch(17% 0.012 60);
 
-    --serif: 'Instrument Serif', Georgia, 'Times New Roman', serif;
-    --sans: 'Archivo', system-ui, -apple-system, 'Segoe UI', sans-serif;
-    --mono: 'JetBrains Mono', ui-monospace, 'Cascadia Mono', Consolas, monospace;
+    /* Exact de stapels uit het ontwerp, en dat is geen muggenzifterij: het pijltje "→"
+       (U+2192) zit NIET in Archivo, dus daarvoor valt de browser terug op het volgende
+       lettertype. Met een rijkere stapel (system-ui, Segoe UI) werd de BESTEL-knop 1,38px
+       smaller dan in het ontwerp, en schoof het prijsblok ernaast mee. Gemeten. */
+    --serif: 'Instrument Serif', serif;
+    --sans: 'Archivo', sans-serif;
+    --mono: 'JetBrains Mono', monospace;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -87,6 +95,7 @@
         --hover: oklch(23% 0.014 65);
 
         --beoordeling-tekst: oklch(78% 0.012 65);
+        --prijs-context: oklch(74% 0.012 65);
 
         --brief-bg: oklch(24% 0.014 65);
         --brief-tekst: oklch(92% 0.014 85);
@@ -120,6 +129,7 @@
     --hover: oklch(23% 0.014 65);
 
     --beoordeling-tekst: oklch(78% 0.012 65);
+    --prijs-context: oklch(74% 0.012 65);
 
     --brief-bg: oklch(24% 0.014 65);
     --brief-tekst: oklch(92% 0.014 85);
@@ -132,9 +142,15 @@
 
 /* ---------------------------------------------------------------- basis */
 
-* {
-    box-sizing: border-box;
-}
+/* GEEN globale box-sizing-reset, en dat is met opzet.
+
+   Het ontwerp heeft er ook geen: daar geldt overal het standaard content-box, en staat
+   border-box op precies twee elementen (het zoekveld en de filter-select). Met een globale
+   reset wordt .pagina 880px BREED IN TOTAAL in plaats van 880px INHOUD, en dan is de
+   tekstkolom 792 in plaats van 880 - een verschil van 88px dat de hele pagina smaller maakt.
+   Gemeten tegen de gerenderde ontwerpplaat: inhoud van x=200 tot x=1080.
+
+   Zet je hier ooit toch een reset neer, geef .pagina dan expliciet content-box terug. */
 
 body {
     margin: 0;
@@ -142,7 +158,9 @@ body {
     color: var(--ink);
     font-family: var(--sans);
     min-height: 100vh;
-    -webkit-font-smoothing: antialiased;
+    /* GEEN -webkit-font-smoothing. Het ontwerp zet die niet, en de eigenschap verandert de
+       manier waarop letters worden gladgestreken: met 'antialiased' wordt tekst anders
+       weergegeven dan op de ontwerpplaat. Gemeten op de BESTEL-knop en de voettekst. */
 }
 
 a {
@@ -152,6 +170,17 @@ a {
 @keyframes fadeIn {
     from { opacity: 0 }
     to { opacity: 1 }
+}
+
+/* Het ontwerp laat de pagina-inhoud infaden. Dat is niet alleen een effect: een animerend
+   element krijgt een eigen compositielaag, en daardoor gebruikt de browser GRIJSWAARDE-
+   antialiasing in plaats van subpixel. Zonder deze regel rendert dezelfde letter op dezelfde
+   plek met kleurfranjes (gemeten: (19,152,193) tegen (154,149,142) van het ontwerp).
+   De omvang is die van het ontwerp: van de kop tot en met de kennisbankverwijzing; het
+   nieuwsbriefvak en de voettekst vallen erbuiten.
+   Zonder animatieondersteuning wordt opacity nooit op 0 gezet, dus de inhoud blijft zichtbaar. */
+.pagina-inhoud {
+    animation: fadeIn .25s both;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -199,7 +228,9 @@ a {
     cursor: pointer;
     text-align: left;
     text-decoration: none;
-    line-height: 1.1;
+    /* GEEN line-height hier. Het ontwerp zet er geen, en de normale regelhoogte van
+       Instrument Serif maakt de servicebalk 5px hoger. Met line-height:1.1 kwam de hele
+       pagina 5px omhoog ten opzichte van de ontwerpplaat - op elke pagina met wordmark. */
 }
 
 .wordmark-accent {
@@ -969,6 +1000,8 @@ a {
     padding: 0 13px;
     height: 46px;
     border-radius: 0;
+    /* Een van de twee plekken waar het ontwerp zelf border-box zet. */
+    box-sizing: border-box;
 }
 
 .kb-zoekveld:focus-visible {
@@ -1014,6 +1047,8 @@ a {
 .kb-filter-veld select {
     appearance: none;
     width: 100%;
+    /* De tweede plek waar het ontwerp border-box zet. */
+    box-sizing: border-box;
     border: 1px solid var(--veld-rand);
     border-radius: 0;
     background: var(--veld);
@@ -1541,7 +1576,7 @@ a {
 
 .wd-prijs-context {
     font-size: 13.5px;
-    color: var(--muted-2);
+    color: var(--prijs-context);
 }
 
 .wd-prijs-noot {
@@ -1665,6 +1700,9 @@ a {
 }
 
 .feedback-venster {
+    /* Eigen onderdeel (staat niet in het ontwerp), dus hier zelf border-box zetten nu de
+       globale reset weg is - anders wordt het venster 460 + 44 breed. */
+    box-sizing: border-box;
     background: var(--bg);
     color: var(--ink);
     border: 1px solid var(--rule);
@@ -1688,6 +1726,7 @@ a {
 }
 
 .feedback-veld {
+    box-sizing: border-box;
     width: 100%;
     margin-top: 14px;
     background: var(--veld);
