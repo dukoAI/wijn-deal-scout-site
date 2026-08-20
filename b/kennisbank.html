@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kennisbank &mdash; Wijn Deal Scout</title>
+<meta name="description" content="Alle wijnen die Wijn Deal Scout beoordeeld heeft, met onze kwaliteitsscore per fles.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&amp;family=Archivo:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script>
+(function () {
+  var opgeslagen = localStorage.getItem('wds-theme');
+  var thema = opgeslagen || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  document.documentElement.setAttribute('data-theme', thema);
+})();
+</script>
+</head>
+<body>
+<div class="topbalk"></div>
+<div class="pagina">
+<div class="servicebalk">
+<a class="wordmark" href="index.html">Wijn Deal <span class="wordmark-accent">Scout</span></a>
+<nav class="servicebalk-nav" aria-label="Hoofdnavigatie"><a class="nav-link" href="index.html">DEZE WEEK</a><a class="nav-link actief" href="kennisbank.html">KENNISBANK</a><button class="nav-link" type="button" onclick="wdsWisselThema()" aria-label="Wissel tussen licht en donker">LICHT/DONKER</button></nav>
+</div>
+
+<div class="kb-kop">
+<h1 class="kb-titel">Kennisbank</h1>
+<div class="kb-kop-meta">
+<div><span class="mono">8</span> WIJNEN BEOORDEELD</div>
+<div>BIJGEWERKT <span class="mono">09.08.2026</span></div>
+</div>
+</div>
+<div class="dubbele-lijn"></div>
+<div class="dubbele-lijn-dun"></div>
+
+<p class="kb-intro">Onze kwaliteitsscore gaat over de wijn zelf en staat los van de prijs van vandaag. De prijs hoort bij het moment dat we hem zagen, dus die staat er altijd met datum bij.</p>
+
+<div class="kb-zoekbalk" data-kb-zoekbalk hidden>
+<div class="kb-zoekrij">
+<input class="kb-zoekveld" type="search" data-filter="zoek" placeholder="Zoek op naam, land, streek, druif of kleur" aria-label="Zoek in de kennisbank">
+<span class="kb-zoekknop" aria-hidden="true">ZOEK</span>
+</div>
+<div class="kb-filters">
+<div>
+<div class="kb-filter-label">LAND</div>
+<div class="kb-filter-veld">
+<select data-filter="land" data-alles="Alle landen" aria-label="LAND">
+<option value="">Alle landen</option>
+<option value="Chili">Chili (1)</option><option value="Frankrijk">Frankrijk (2)</option><option value="Italië">Italië (2)</option><option value="Portugal">Portugal (2)</option><option value="Spanje">Spanje (1)</option>
+</select>
+<span class="kb-filter-pijl" aria-hidden="true">&#9662;</span>
+</div>
+</div><div>
+<div class="kb-filter-label">STREEK</div>
+<div class="kb-filter-veld">
+<select data-filter="regio" data-alles="Alle streken" aria-label="STREEK">
+<option value="">Alle streken</option>
+<option value="Alentejo">Alentejo (1)</option><option value="Bourgogne">Bourgogne (1)</option><option value="Central Valley">Central Valley (1)</option><option value="Douro">Douro (1)</option><option value="Provence">Provence (1)</option><option value="Puglia">Puglia (1)</option><option value="Toscane">Toscane (1)</option>
+</select>
+<span class="kb-filter-pijl" aria-hidden="true">&#9662;</span>
+</div>
+</div><div>
+<div class="kb-filter-label">DRUIF</div>
+<div class="kb-filter-veld">
+<select data-filter="druiven" data-alles="Alle druiven" aria-label="DRUIF">
+<option value="">Alle druiven</option>
+<option value="Alicante Bouschet">Alicante Bouschet (1)</option><option value="Chardonnay">Chardonnay (2)</option><option value="Merlot">Merlot (1)</option><option value="Negroamaro">Negroamaro (1)</option><option value="Primitivo">Primitivo (1)</option><option value="Sangiovese">Sangiovese (1)</option><option value="Tinta Barroca">Tinta Barroca (1)</option><option value="Tinta Roriz">Tinta Roriz (1)</option><option value="Tinto Cão">Tinto Cão (1)</option><option value="Touriga Franca">Touriga Franca (1)</option><option value="Touriga Nacional">Touriga Nacional (1)</option>
+</select>
+<span class="kb-filter-pijl" aria-hidden="true">&#9662;</span>
+</div>
+</div><div>
+<div class="kb-filter-label">KLEUR</div>
+<div class="kb-filter-veld">
+<select data-filter="type" data-alles="Alle kleuren" aria-label="KLEUR">
+<option value="">Alle kleuren</option>
+<option value="Rood">Rood (4)</option><option value="Rosé">Rosé (1)</option><option value="Wit">Wit (3)</option>
+</select>
+<span class="kb-filter-pijl" aria-hidden="true">&#9662;</span>
+</div>
+</div>
+<div>
+<div class="kb-filter-label">SORTEER OP</div>
+<div class="kb-filter-veld">
+<select data-sortering aria-label="Sorteer op">
+<option value="kwaliteit">Kwaliteitsscore</option>
+<option value="recent">Meest recent beoordeeld</option>
+<option value="abc">Alfabetisch</option>
+</select>
+<span class="kb-filter-pijl" aria-hidden="true">&#9662;</span>
+</div>
+</div>
+</div>
+</div>
+
+<div class="kb-resultaatrij">
+<div class="kb-telling">8 wijnen beoordeeld</div>
+<div class="kb-actieve-filters"></div>
+</div>
+
+<div class="kb-tabelkop">
+<span class="kb-tabelkop-wijn">WIJN</span>
+<span class="kb-tabelkop-kwaliteit">KWALITEIT</span>
+<span class="kb-tabelkop-datum">LAATST GEZIEN</span>
+<span class="kb-tabelkop-datum">BEOORDEELD</span>
+</div>
+
+<div class="kb-lijst">
+<a class="kb-rij" href="kennisbank/aluado-alicante-bouschet-2024/index.html"
+ data-zoek="aluado alicante bouschet 2024 rood alentejo portugal dfj vinhos alicante bouschet"
+ data-land="Portugal"
+ data-regio="Alentejo"
+ data-druiven="Alicante Bouschet"
+ data-type="Rood"
+ data-score="8.0"
+ data-datum="2026-08-09"
+ data-naam="aluado alicante bouschet">
+<span class="kb-rij-wijn">
+<span class="kb-rij-naam">Aluado Alicante Bouschet <span class="kb-rij-jaargang">2024</span></span>
+<span class="kb-rij-herkomst">Alentejo, Portugal</span>
+</span>
+<span class="kb-rij-kwaliteit">8<span class="score-suffix">/10</span></span>
+<span class="kb-rij-prijs">€ 7,99</span>
+<span class="kb-rij-beoordeeld">09.08.2026</span>
+</a><a class="kb-rij" href="kennisbank/barao-de-vilar-10-years-old-port-met-2-portglazen/index.html"
+ data-zoek="barão de vilar 10 years old port met 2 portglazen rood douro portugal touriga nacional touriga franca tinta roriz tinto cão tinta barroca"
+ data-land="Portugal"
+ data-regio="Douro"
+ data-druiven="Touriga Nacional|Touriga Franca|Tinta Roriz|Tinto Cão|Tinta Barroca"
+ data-type="Rood"
+ data-score="7.5"
+ data-datum="2026-08-09"
+ data-naam="barão de vilar 10 years old port met 2 portglazen">
+<span class="kb-rij-wijn">
+<span class="kb-rij-naam">Barão de Vilar 10 Years Old Port met 2 portglazen</span>
+<span class="kb-rij-herkomst">Douro, Portugal</span>
+</span>
+<span class="kb-rij-kwaliteit">7,5<span class="score-suffix">/10</span></span>
+<span class="kb-rij-prijs">€ 24,99</span>
+<span class="kb-rij-beoordeeld">09.08.2026</span>
+</a><a class="kb-rij" href="kennisbank/domaine-de-la-motte-chablis-2024/index.html"
+ data-zoek="domaine de la motte chablis 2024 wit bourgogne frankrijk domaine de la motte chardonnay"
+ data-land="Frankrijk"
+ data-regio="Bourgogne"
+ data-druiven="Chardonnay"
+ data-type="Wit"
+ data-score="7.5"
+ data-datum="2026-08-09"
+ data-naam="domaine de la motte chablis">
+<span class="kb-rij-wijn">
+<span class="kb-rij-naam">Domaine de la Motte Chablis <span class="kb-rij-jaargang">2024</span></span>
+<span class="kb-rij-herkomst">Bourgogne, Frankrijk</span>
+</span>
+<span class="kb-rij-kwaliteit">7,5<span class="score-suffix">/10</span></span>
+<span class="kb-rij-prijs">€ 18,99</span>
+<span class="kb-rij-beoordeeld">09.08.2026</span>
+</a><a class="kb-rij" href="kennisbank/menzatia-primitivo-negroamaro-2025/index.html"
+ data-zoek="menzatia primitivo-negroamaro 2025 rood puglia italië primitivo negroamaro"
+ data-land="Italië"
+ data-regio="Puglia"
+ data-druiven="Primitivo|Negroamaro"
+ data-type="Rood"
+ data-score="6.5"
+ data-datum="2026-08-09"
+ data-naam="menzatia primitivo-negroamaro">
+<span class="kb-rij-wijn">
+<span class="kb-rij-naam">Menzatia Primitivo-Negroamaro <span class="kb-rij-jaargang">2025</span></span>
+<span class="kb-rij-herkomst">Puglia, Italië</span>
+</span>
+<span class="kb-rij-kwaliteit">6,5<span class="score-suffix">/10</span></span>
+<span class="kb-rij-prijs">€ 9,99</span>
+<span class="kb-rij-beoordeeld">09.08.2026</span>
+</a><a class="kb-rij" href="kennisbank/oro-italiano-governo-2023/index.html"
+ data-zoek="oro italiano governo 2023 rood toscane italië merlot sangiovese"
+ data-land="Italië"
+ data-regio="Toscane"
+ data-druiven="Merlot|Sangiovese"
+ data-type="Rood"
+ data-score="6.0"
+ data-datum="2026-08-09"
+ data-naam="oro italiano governo">
+<span class="kb-rij-wijn">
+<span class="kb-rij-naam">Oro Italiano Governo <span class="kb-rij-jaargang">2023</span></span>
+<span class="kb-rij-herkomst">Toscane, Italië</span>
+</span>
+<span class="kb-rij-kwaliteit">6<span class="score-suffix">/10</span></span>
+<span class="kb-rij-prijs">€ 8,79</span>
+<span class="kb-rij-beoordeeld">09.08.2026</span>
+</a><a class="kb-rij" href="kennisbank/xxx-coteaux-varois-en-provence-rose-2025/index.html"
+ data-zoek="xxx coteaux varois-en-provence rosé 2025 rosé provence frankrijk"
+ data-land="Frankrijk"
+ data-regio="Provence"
+ data-druiven=""
+ data-type="Rosé"
+ data-score="6.0"
+ data-datum="2026-08-09"
+ data-naam="xxx coteaux varois-en-provence rosé">
+<span class="kb-rij-wijn">
+<span class="kb-rij-naam">XXX Coteaux Varois-en-Provence Rosé <span class="kb-rij-jaargang">2025</span></span>
+<span class="kb-rij-herkomst">Provence, Frankrijk</span>
+</span>
+<span class="kb-rij-kwaliteit">6<span class="score-suffix">/10</span></span>
+<span class="kb-rij-prijs">€ 9,49</span>
+<span class="kb-rij-beoordeeld">09.08.2026</span>
+</a><a class="kb-rij" href="kennisbank/cibolo-chardonnay-2025/index.html"
+ data-zoek="cibolo chardonnay 2025 wit spanje bodegas alceño"
+ data-land="Spanje"
+ data-regio=""
+ data-druiven=""
+ data-type="Wit"
+ data-score="4.5"
+ data-datum="2026-08-09"
+ data-naam="cibolo chardonnay">
+<span class="kb-rij-wijn">
+<span class="kb-rij-naam">Cibolo Chardonnay <span class="kb-rij-jaargang">2025</span></span>
+<span class="kb-rij-herkomst">Spanje</span>
+</span>
+<span class="kb-rij-kwaliteit">4,5<span class="score-suffix">/10</span></span>
+<span class="kb-rij-prijs">€ 7,49</span>
+<span class="kb-rij-beoordeeld">09.08.2026</span>
+</a><a class="kb-rij" href="kennisbank/picadora-chardonnay-2025/index.html"
+ data-zoek="picadora chardonnay 2025 wit central valley chili chardonnay"
+ data-land="Chili"
+ data-regio="Central Valley"
+ data-druiven="Chardonnay"
+ data-type="Wit"
+ data-score="4.0"
+ data-datum="2026-08-09"
+ data-naam="picadora chardonnay">
+<span class="kb-rij-wijn">
+<span class="kb-rij-naam">Picadora Chardonnay <span class="kb-rij-jaargang">2025</span></span>
+<span class="kb-rij-herkomst">Central Valley, Chili</span>
+</span>
+<span class="kb-rij-kwaliteit">4<span class="score-suffix">/10</span></span>
+<span class="kb-rij-prijs">€ 5,99</span>
+<span class="kb-rij-beoordeeld">09.08.2026</span>
+</a>
+</div>
+
+<button type="button" class="kb-meer" data-toon-meer hidden></button>
+
+<div class="kb-leeg" hidden>
+<p class="kb-leeg-kop">Geen wijn gevonden met deze combinatie.</p>
+<p class="kb-leeg-tekst">We beoordelen alleen wijnen die we in een aanbieding tegenkomen, dus de kennisbank groeit per week.</p>
+<button type="button" class="kb-leeg-knop" data-wis-alles>ALLE FILTERS WISSEN</button>
+</div>
+
+<section class="nieuwsbrief" aria-labelledby="nieuwsbrief-titel">
+<div class="nieuwsbrief-titel" id="nieuwsbrief-titel">Elke vrijdag in je inbox</div>
+<div class="nieuwsbrief-sub">GRATIS &mdash; OPZEGGEN MET &Eacute;&Eacute;N KLIK</div>
+<form class="nieuwsbrief-form" data-nieuwsbrief-form>
+<input type="email" name="email" required placeholder="jij@voorbeeld.nl" aria-label="Je e-mailadres">
+<button type="submit">AANMELDEN</button>
+</form>
+<p class="nieuwsbrief-fout" data-nieuwsbrief-status role="status" hidden></p>
+<div class="nieuwsbrief-bedankt" data-nieuwsbrief-bedankt hidden>Bedankt! Je staat op de lijst en krijgt de eerstvolgende editie mee.</div>
+</section>
+<div class="paginavoet">
+<span>WE BEOORDELEN WEKELIJKS <span class="mono">17</span> NEDERLANDSE WIJNHANDELS</span>
+<span class="paginavoet-links">
+<a href="kennisbank.html">KENNISBANK</a>
+<button type="button" data-feedback-open>FEEDBACK</button>
+</span>
+</div>
+</div>
+<div class="feedback-overlay" data-feedback-overlay hidden>
+<div class="feedback-venster" role="dialog" aria-modal="true" aria-labelledby="feedback-titel">
+<p class="feedback-kop feedback-titel" id="feedback-titel">Denk je mee?</p>
+<p class="feedback-tekst">Wat zou deze nieuwsbrief beter maken? We lezen alles wat binnenkomt.</p>
+<form class="feedback-formulier" data-feedback-form>
+<textarea class="feedback-veld" name="bericht" rows="6" required aria-label="Jouw feedback" placeholder="Bijvoorbeeld: meer witte wijn, of vaker iets onder de acht euro&hellip;"></textarea>
+<div class="feedback-knoppen">
+<button class="feedback-verstuur" type="submit">VERSTUREN</button>
+<button class="feedback-annuleer" type="button" data-feedback-sluit>SLUITEN</button>
+</div>
+</form>
+<p class="feedback-tekst" data-feedback-status role="status" hidden></p>
+<div class="feedback-bedankt" data-feedback-bedankt hidden>Bedankt voor je feedback! We nemen het mee in de volgende editie.</div>
+</div>
+</div>
+<script>
+function wdsWisselThema() {
+  var html = document.documentElement;
+  var volgende = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', volgende);
+  localStorage.setItem('wds-theme', volgende);
+}
+
+(function () {
+  var endpoint = "https://formspree.io/f/mzepkvoy";
+  var nieuwsbriefEndpoint = "https://formspree.io/f/xzepkand";
+  var zonderBestemming = false;
+  var SLUIT_NA_BEDANKT = 2500;  // ms; 0 laat het venster openstaan tot de bezoeker zelf sluit
+  var overlay = document.querySelector('[data-feedback-overlay]');
+  var status = document.querySelector('[data-feedback-status]');
+  var vorigeFocus = null;
+  var sluitTimer = null;
+
+  function open() {
+    if (!overlay) return;
+    vorigeFocus = document.activeElement;
+    // Terug naar het formulier als het venster de vorige keer op "bedankt" bleef staan.
+    var bedankt = overlay.querySelector('[data-feedback-bedankt]');
+    var form = overlay.querySelector('[data-feedback-form]');
+    if (bedankt && !bedankt.hidden) {
+      bedankt.hidden = true;
+      if (form) {
+        form.hidden = false;
+        form.reset();
+        var knop = form.querySelector('button[type="submit"]');
+        if (knop) knop.disabled = false;
+      }
+      if (status) { status.hidden = true; status.textContent = ''; }
+    }
+    overlay.hidden = false;
+    var veld = overlay.querySelector('textarea');
+    if (veld) veld.focus();
+  }
+
+  function sluit() {
+    if (!overlay) return;
+    if (sluitTimer) { clearTimeout(sluitTimer); sluitTimer = null; }
+    overlay.hidden = true;
+    if (vorigeFocus && vorigeFocus.focus) vorigeFocus.focus();
+  }
+
+  document.addEventListener('click', function (e) {
+    if (e.target.closest('[data-feedback-open]')) { open(); return; }
+    if (e.target.closest('[data-feedback-sluit]')) { sluit(); return; }
+    if (overlay && e.target === overlay) sluit();
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && overlay && !overlay.hidden) sluit();
+  });
+
+  // Uitklapbare beoordelingen. De HTML levert ze OPEN aan met de knop verborgen, zodat een
+  // bezoeker zonder JavaScript de hele tekst ziet in plaats van een knop die niets doet.
+  // Hier draaien we dat om: tekst dicht, knop zichtbaar.
+  document.querySelectorAll('[data-uitklap]').forEach(function (knop) {
+    var doel = document.getElementById(knop.getAttribute('data-uitklap'));
+    if (!doel) return;
+    doel.hidden = true;
+    knop.hidden = false;
+    knop.textContent = 'LEES DE HELE BEOORDELING';
+    knop.setAttribute('aria-expanded', 'false');
+    knop.addEventListener('click', function () {
+      var openNu = doel.hidden;
+      doel.hidden = !openNu;
+      knop.setAttribute('aria-expanded', openNu ? 'true' : 'false');
+      knop.textContent = openNu ? 'MINDER TEKST' : 'LEES DE HELE BEOORDELING';
+    });
+  });
+
+  var form = document.querySelector('[data-feedback-form]');
+
+  function bedanktTonen() {
+    var bedankt = overlay.querySelector('[data-feedback-bedankt]');
+    form.hidden = true;
+    if (status) { status.hidden = true; status.textContent = ''; }
+    if (bedankt) bedankt.hidden = false;
+    if (SLUIT_NA_BEDANKT) sluitTimer = setTimeout(sluit, SLUIT_NA_BEDANKT);
+  }
+
+  if (form) form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var veld = form.querySelector('textarea');
+    var knop = form.querySelector('button[type="submit"]');
+    if (!endpoint) {
+      if (zonderBestemming) { knop.disabled = true; bedanktTonen(); }
+      return;
+    }
+    knop.disabled = true;
+    status.hidden = false;
+    status.textContent = 'Versturen…';
+    fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ bericht: veld.value, pagina: location.pathname })
+    }).then(function (r) {
+      if (!r.ok) throw new Error(r.status);
+      bedanktTonen();
+    }).catch(function () {
+      knop.disabled = false;
+      status.hidden = false;
+      status.textContent = 'Versturen lukte niet. Probeer het later nog eens.';
+    });
+  });
+
+  var nbForm = document.querySelector('[data-nieuwsbrief-form]');
+  var nbStatus = document.querySelector('[data-nieuwsbrief-status]');
+  var nbBedankt = document.querySelector('[data-nieuwsbrief-bedankt]');
+
+  if (nbForm && nieuwsbriefEndpoint) nbForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var veld = nbForm.querySelector('input[type="email"]');
+    var nbKnop = nbForm.querySelector('button[type="submit"]');
+    nbKnop.disabled = true;
+    nbStatus.hidden = false;
+    nbStatus.textContent = 'Versturen…';
+    fetch(nieuwsbriefEndpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ email: veld.value, pagina: location.pathname })
+    }).then(function (r) {
+      if (!r.ok) throw new Error(r.status);
+      // .nieuwsbrief-form heeft display:flex, dus [hidden] werkt alleen dankzij de guard
+      // in style.css.
+      nbForm.hidden = true;
+      nbStatus.hidden = true;
+      nbBedankt.hidden = false;
+    }).catch(function () {
+      nbKnop.disabled = false;
+      nbStatus.hidden = false;
+      nbStatus.textContent = 'Aanmelden lukte niet. Probeer het later nog eens.';
+    });
+  });
+})();
+</script>
+<script src="kennisbank.js"></script>
+</body>
+</html>

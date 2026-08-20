@@ -1,0 +1,1758 @@
+/* ================================================================
+   Wijn Deal Scout — variant B, "bulletin"-ontwerp
+   Naar het Claude Design-ontwerp *Wijn Deal Scout Bulletin Site*
+   (geïmporteerd 21 augustus 2026).
+
+   Alle waarden hieronder komen letterlijk uit dat ontwerp. Het ontwerp
+   werkt met inline stijlen per element; hier staan ze als klassen, zodat
+   de Python-generatoren leesbaar blijven. Wijzig een getal alleen als het
+   ontwerp wijzigt — niet "omdat het mooier oogt".
+
+   Licht is de basis. Het donkere palet komt uit de DONKER-artboards van
+   het zusterdocument *Bulletin Pagina's* van dezelfde ontwerpronde.
+   ================================================================ */
+
+/* ---------------------------------------------------------------- tokens */
+
+:root {
+    /* Kern. --ink is zowel de tekstkleur als de achtergrond van een
+       omgekeerde knop; --bg is de pagina en de tekst óp die knop. Doordat
+       die twee in donker thema van plaats wisselen, klopt het contrast van
+       elke knop automatisch mee. Precies zo staat het in het ontwerp:
+       licht = ink-op-bg, donker = bg-op-ink. */
+    --bg: oklch(94.5% 0.014 85);
+    --ink: oklch(17% 0.012 60);
+    --accent: oklch(50% 0.2 32);
+
+    --muted: oklch(45% 0.012 60);
+    --muted-2: oklch(42% 0.012 60);
+    --muted-3: oklch(52% 0.012 60);
+    --muted-4: oklch(50% 0.012 60);
+    /* Het ontwerp zet hier 55%; gemeten haalt dat 4,14:1 tegen de paginakleur en WCAG AA
+       vraagt 4,5 voor tekst van deze grootte. 53% is de grens (4,51), 52% geeft marge
+       (4,70) en blijft duidelijk lichter dan de broodtekst. Zie ook --muted-3/-5 in donker. */
+    --muted-5: oklch(52% 0.012 60);
+
+    /* De zware streep onder de kop. In licht is dat de inktkleur, in donker
+       juist een lichte lijn — daarom een eigen token en niet var(--ink). */
+    --rule: oklch(17% 0.012 60);
+
+    --lijn: oklch(80% 0.012 70);
+    --lijn-mid: oklch(78% 0.012 70);
+    --lijn-zacht: oklch(84% 0.012 70);
+
+    --veld: oklch(97% 0.01 85);
+    --veld-rand: oklch(76% 0.012 70);
+    --hover: oklch(91% 0.016 85);
+
+    --beoordeling-tekst: oklch(30% 0.012 60);
+
+    /* Het nieuwsbriefblok is in licht een inktvlak, in donker een iets
+       lichter vlak dan de pagina (het ontwerp zet daar 24%). */
+    --brief-bg: oklch(17% 0.012 60);
+    --brief-tekst: oklch(94.5% 0.014 85);
+    --brief-sub: oklch(70% 0.012 60);
+    --brief-rand: oklch(60% 0.012 60);
+    --brief-knop-tekst: oklch(96% 0.01 85);
+
+    --topbalk: oklch(17% 0.012 60);
+
+    --serif: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+    --sans: 'Archivo', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --mono: 'JetBrains Mono', ui-monospace, 'Cascadia Mono', Consolas, monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+        --bg: oklch(19% 0.012 65);
+        --ink: oklch(92% 0.014 85);
+        --accent: oklch(62% 0.19 34);
+
+        --muted: oklch(64% 0.012 65);
+        --muted-2: oklch(70% 0.012 65);
+        /* 55%/58% uit het ontwerp halen 3,80 en 4,31 tegen de donkere achtergrond; 60% is
+           de eerste waarde boven 4,5 (gemeten 4,67). */
+        --muted-3: oklch(60% 0.012 65);
+        --muted-4: oklch(60% 0.012 65);
+        --muted-5: oklch(60% 0.012 65);
+
+        --rule: oklch(80% 0.014 85);
+
+        --lijn: oklch(34% 0.012 65);
+        --lijn-mid: oklch(40% 0.012 65);
+        --lijn-zacht: oklch(30% 0.012 65);
+
+        --veld: oklch(24% 0.014 65);
+        --veld-rand: oklch(45% 0.012 65);
+        --hover: oklch(23% 0.014 65);
+
+        --beoordeling-tekst: oklch(78% 0.012 65);
+
+        --brief-bg: oklch(24% 0.014 65);
+        --brief-tekst: oklch(92% 0.014 85);
+        --brief-sub: oklch(78% 0.012 65);
+        --brief-rand: oklch(45% 0.012 65);
+        --brief-knop-tekst: oklch(19% 0.012 65);
+
+        --topbalk: oklch(62% 0.19 34);
+    }
+}
+
+:root[data-theme="dark"] {
+    --bg: oklch(19% 0.012 65);
+    --ink: oklch(92% 0.014 85);
+    --accent: oklch(62% 0.19 34);
+
+    --muted: oklch(64% 0.012 65);
+    --muted-2: oklch(70% 0.012 65);
+    --muted-3: oklch(60% 0.012 65);
+    --muted-4: oklch(60% 0.012 65);
+    --muted-5: oklch(60% 0.012 65);
+
+    --rule: oklch(80% 0.014 85);
+
+    --lijn: oklch(34% 0.012 65);
+    --lijn-mid: oklch(40% 0.012 65);
+    --lijn-zacht: oklch(30% 0.012 65);
+
+    --veld: oklch(24% 0.014 65);
+    --veld-rand: oklch(45% 0.012 65);
+    --hover: oklch(23% 0.014 65);
+
+    --beoordeling-tekst: oklch(78% 0.012 65);
+
+    --brief-bg: oklch(24% 0.014 65);
+    --brief-tekst: oklch(92% 0.014 85);
+    --brief-sub: oklch(78% 0.012 65);
+    --brief-rand: oklch(45% 0.012 65);
+    --brief-knop-tekst: oklch(19% 0.012 65);
+
+    --topbalk: oklch(62% 0.19 34);
+}
+
+/* ---------------------------------------------------------------- basis */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+}
+
+a {
+    color: inherit;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0 }
+    to { opacity: 1 }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: .001ms !important;
+        transition-duration: .001ms !important;
+    }
+}
+
+/* De smalle balk bovenaan de pagina. 7px, over de volle breedte. */
+.topbalk {
+    height: 7px;
+    background: var(--topbalk);
+}
+
+.pagina {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 0 clamp(16px, 4vw, 44px) 56px;
+}
+
+/* ---------------------------------------------------------------- servicebalk */
+
+.servicebalk {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding: 13px 0;
+    border-bottom: 1px solid var(--lijn);
+}
+
+/* Kleine wordmark links. Staat er alleen op pagina's die niet de editie
+   zelf zijn — daar draagt de grote kop de naam al (zo staat het in het
+   ontwerp: sc-if nietOpBrief). */
+.wordmark {
+    background: none;
+    border: none;
+    padding: 0;
+    font-family: var(--serif);
+    font-size: clamp(18px, 4.6vw, 22px);
+    letter-spacing: -.015em;
+    color: inherit;
+    cursor: pointer;
+    text-align: left;
+    text-decoration: none;
+    line-height: 1.1;
+}
+
+.wordmark-accent {
+    color: var(--accent);
+}
+
+.servicebalk-nav {
+    display: flex;
+    gap: clamp(10px, 2.4vw, 18px);
+    flex-wrap: wrap;
+    margin-left: auto;
+    align-items: center;
+}
+
+.nav-link {
+    background: none;
+    border: none;
+    padding: 0;
+    font-family: var(--sans);
+    font-size: 9.5px;
+    font-weight: 500;
+    letter-spacing: .13em;
+    color: var(--muted-2);
+    cursor: pointer;
+    line-height: 1.9;
+    text-decoration: none;
+}
+
+.nav-link.actief {
+    font-weight: 700;
+    color: var(--accent);
+    border-bottom: 1px solid var(--accent);
+}
+
+.nav-link:hover {
+    color: var(--accent);
+}
+
+/* ---------------------------------------------------------------- kop van een sectie-pagina */
+
+.masthead {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding: 22px 0 12px;
+}
+
+.masthead-titel {
+    font-family: var(--serif);
+    font-size: clamp(38px, 9.4vw, 62px);
+    line-height: .88;
+    letter-spacing: -.03em;
+    white-space: nowrap;
+    margin: 0;
+    font-weight: 400;
+}
+
+.masthead-titel .wordmark-accent {
+    color: var(--accent);
+}
+
+.masthead-meta {
+    font-size: 9.5px;
+    font-weight: 600;
+    letter-spacing: .13em;
+    line-height: 2;
+    color: var(--muted-2);
+    text-align: right;
+    /* Compenseert de letterspatie achter het laatste teken, zodat de regel
+       optisch echt rechts uitlijnt met de kolom eronder. */
+    margin-right: -.13em;
+}
+
+/* Cijfers krijgen overal het mono-lettertype met tabelcijfers: in een
+   bulletin moeten getallen onder elkaar uitlijnen. */
+.mono {
+    font-family: var(--mono);
+    letter-spacing: .06em;
+    font-variant-numeric: tabular-nums;
+}
+
+/* De dubbele streep onder de kop: 2px, 3px lucht, 1px. */
+.dubbele-lijn {
+    height: 2px;
+    background: var(--rule);
+}
+
+.dubbele-lijn-dun {
+    height: 1px;
+    background: var(--rule);
+    margin-top: 3px;
+}
+
+/* ---------------------------------------------------------------- intro */
+
+.intro-rij {
+    display: flex;
+    gap: clamp(18px, 4vw, 34px);
+    flex-wrap: wrap;
+    padding-top: 22px;
+}
+
+.intro-tekst {
+    flex: 1 1 300px;
+    font-size: clamp(15px, 4vw, 16.5px);
+    line-height: 1.6;
+    margin: 0;
+    max-width: 56ch;
+    text-wrap: pretty;
+}
+
+.intro-lead {
+    font-weight: 700;
+}
+
+.intro-aside {
+    flex: 1 1 170px;
+    max-width: 230px;
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 9.5px;
+    line-height: 1.75;
+    letter-spacing: .06em;
+    color: var(--muted-2);
+    border-left: 1px solid var(--lijn-mid);
+    padding-left: 16px;
+}
+
+/* ---------------------------------------------------------------- sectiekop */
+
+.sectiekop {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 30px 0 0;
+}
+
+.sectiekop-krap {
+    margin: 28px 0 0;
+}
+
+.sectiekop-label {
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 10px;
+    letter-spacing: .18em;
+    white-space: nowrap;
+}
+
+.sectiekop-lijn {
+    flex: 1;
+    height: 1px;
+    background: var(--lijn-mid);
+}
+
+/* ---------------------------------------------------------------- top-3 deal */
+
+.deal {
+    border-bottom: 1px solid var(--lijn);
+    padding: 22px 0 20px;
+}
+
+.deal-kop {
+    display: flex;
+    gap: clamp(12px, 3vw, 22px);
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.deal-rang {
+    font-family: var(--mono);
+    font-size: clamp(34px, 8vw, 50px);
+    font-weight: 700;
+    line-height: .85;
+    letter-spacing: -.04em;
+    color: var(--accent);
+    flex: none;
+    font-variant-numeric: tabular-nums;
+}
+
+.deal-mid {
+    flex: 1 1 200px;
+    min-width: 0;
+}
+
+.deal-regio {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 9.5px;
+    letter-spacing: .13em;
+    color: var(--muted);
+}
+
+.deal-naam {
+    font-size: clamp(21px, 5.2vw, 27px);
+    font-weight: 600;
+    line-height: 1.16;
+    letter-spacing: -.02em;
+    margin: 5px 0 0;
+    text-wrap: pretty;
+}
+
+.deal-bronnen {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px 18px;
+    margin-top: 12px;
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 10.5px;
+    font-variant-numeric: tabular-nums;
+}
+
+.bron {
+    color: var(--muted);
+}
+
+.bron-waarde {
+    color: var(--ink);
+    font-weight: 700;
+}
+
+.bron-waarde.cijfers {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0;
+}
+
+.deal-score {
+    flex: none;
+    text-align: right;
+    margin-left: auto;
+}
+
+.deal-score-label {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 9px;
+    letter-spacing: .15em;
+    color: var(--muted);
+}
+
+.deal-score-waarde {
+    font-family: var(--mono);
+    font-size: clamp(34px, 8vw, 46px);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -.05em;
+    font-variant-numeric: tabular-nums;
+    margin-top: 6px;
+}
+
+.score-suffix {
+    font-size: .32em;
+    font-weight: 500;
+    letter-spacing: 0;
+    color: var(--muted-3);
+}
+
+.deal-body {
+    display: flex;
+    gap: clamp(12px, 3vw, 22px);
+    margin-top: 14px;
+    align-items: flex-start;
+}
+
+.deal-foto {
+    width: clamp(38px, 10vw, 52px);
+    flex: none;
+    height: clamp(96px, 26vw, 130px);
+    overflow: hidden;
+}
+
+.deal-foto img,
+.deal-foto svg {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: bottom;
+    display: block;
+}
+
+.deal-tekst {
+    flex: 1;
+    min-width: 0;
+}
+
+.punchline {
+    font-size: clamp(14.5px, 3.9vw, 15.5px);
+    line-height: 1.6;
+    margin: 0;
+    max-width: 52ch;
+    text-wrap: pretty;
+}
+
+/* De tekst komt uit markdown en zit dus in een <p> met een eigen ondermarge. Die marge klapt
+   buiten de div uit en maakte de ruimte boven de beoordeling 16px in plaats van de 12px uit
+   het ontwerp. In het ontwerp is de punchline zélf een <p> met margin:0. */
+.punchline > p:first-child,
+.beoordeling > p:first-child {
+    margin-top: 0;
+}
+
+.punchline > p:last-child,
+.beoordeling > p:last-child {
+    margin-bottom: 0;
+}
+
+.beoordeling {
+    font-size: 14px;
+    line-height: 1.72;
+    margin: 12px 0 0;
+    max-width: 60ch;
+    color: var(--beoordeling-tekst);
+    border-left: 2px solid var(--accent);
+    padding-left: 13px;
+    animation: fadeIn .3s both;
+    text-wrap: pretty;
+}
+
+.deal-voet {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+}
+
+/* De uitklapknop. Staat in de voetregel naast de prijs; de tekst zelf
+   (.beoordeling) is een losse alinea daarboven — zo staat het in het ontwerp.
+   Zonder JavaScript is deze knop verborgen en staat de tekst gewoon open. */
+.uitklap-knop {
+    background: none;
+    border: none;
+    padding: 0;
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 10px;
+    letter-spacing: .13em;
+    color: var(--accent);
+    cursor: pointer;
+    border-bottom: 1px solid var(--accent);
+    line-height: 1.8;
+    align-self: flex-end;
+    width: fit-content;
+}
+
+.uitklap-knop[hidden] {
+    display: none;
+}
+
+.beoordeling[hidden] {
+    display: none;
+}
+
+.deal-prijzen-rij {
+    display: flex;
+    align-items: center;
+    gap: clamp(12px, 3vw, 18px);
+    margin-left: auto;
+}
+
+.deal-prijzen {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+
+.prijs-nu {
+    font-family: var(--mono);
+    font-size: clamp(19px, 4.8vw, 22px);
+    font-weight: 700;
+    letter-spacing: -.03em;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+}
+
+.prijs-was {
+    font-size: 9.5px;
+    font-weight: 500;
+    letter-spacing: .09em;
+    color: var(--muted);
+    margin-top: 2px;
+}
+
+.prijs-was .mono {
+    letter-spacing: 0;
+    text-decoration: line-through;
+}
+
+/* Omgekeerde knop: inktvlak met paginakleur als tekst. Draait mee met het
+   thema, dus het contrast klopt in licht én donker. Zie de tokens bovenaan. */
+.bestel-knop {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--ink);
+    color: var(--bg);
+    text-decoration: none;
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 10px;
+    letter-spacing: .13em;
+    padding: 0 16px;
+    height: 44px;
+    white-space: nowrap;
+    border: none;
+    cursor: pointer;
+    transition: background .15s;
+}
+
+.bestel-knop:hover,
+.bestel-knop:focus-visible {
+    background: var(--accent);
+    color: var(--bg);
+}
+
+/* ---------------------------------------------------------------- overige aanraders */
+
+.overig-kop {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 9px;
+    letter-spacing: .13em;
+    color: var(--muted);
+    padding: 12px 0 7px;
+    border-bottom: 1px solid var(--rule);
+}
+
+.overig-kop-wijn {
+    flex: 1 1 200px;
+}
+
+.overig-kop-getal {
+    width: 88px;
+    text-align: right;
+}
+
+.overig-rij {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    flex-wrap: wrap;
+    padding: 11px 0;
+    border-bottom: 1px solid var(--lijn-zacht);
+    text-decoration: none;
+    color: inherit;
+}
+
+.overig-rij:hover {
+    background: var(--hover);
+}
+
+.overig-naam {
+    flex: 1 1 200px;
+    font-size: 14.5px;
+    line-height: 1.35;
+}
+
+.overig-type {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 9px;
+    letter-spacing: .1em;
+    color: var(--muted-4);
+}
+
+.overig-score {
+    width: 88px;
+    text-align: right;
+    font-family: var(--mono);
+    font-size: 11.5px;
+    font-variant-numeric: tabular-nums;
+    margin-left: auto;
+}
+
+.overig-score-suffix {
+    color: var(--muted-5);
+}
+
+.overig-was {
+    width: 88px;
+    text-align: right;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted-3);
+    text-decoration: line-through;
+    font-variant-numeric: tabular-nums;
+}
+
+.overig-nu {
+    width: 88px;
+    text-align: right;
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+
+/* ---------------------------------------------------------------- kennisbank-verwijzing */
+
+.kb-teaser {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-top: 28px;
+    padding: 18px 0;
+    border-top: 2px solid var(--rule);
+    border-bottom: 1px solid var(--lijn);
+}
+
+.kb-teaser-label {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 9px;
+    letter-spacing: .15em;
+    color: var(--muted);
+}
+
+.kb-teaser-tekst {
+    font-size: clamp(18px, 4.6vw, 20px);
+    font-weight: 600;
+    letter-spacing: -.015em;
+    margin-top: 4px;
+    text-wrap: pretty;
+}
+
+.kb-teaser-getal {
+    font-family: var(--mono);
+    font-weight: 700;
+    letter-spacing: -.03em;
+    font-variant-numeric: tabular-nums;
+}
+
+.kb-teaser-knop {
+    background: none;
+    border: none;
+    padding: 0;
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 10px;
+    letter-spacing: .13em;
+    color: inherit;
+    border-bottom: 2px solid var(--accent);
+    cursor: pointer;
+    justify-self: start;
+    line-height: 1.9;
+    white-space: nowrap;
+    text-decoration: none;
+}
+
+/* ---------------------------------------------------------------- nieuwsbrief */
+
+.nieuwsbrief {
+    background: var(--brief-bg);
+    color: var(--brief-tekst);
+    padding: 20px 22px;
+    margin-top: 32px;
+}
+
+.nieuwsbrief-titel {
+    font-size: clamp(20px, 5.2vw, 23px);
+    font-weight: 700;
+    letter-spacing: -.03em;
+    line-height: 1.2;
+}
+
+.nieuwsbrief-sub {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 9.5px;
+    letter-spacing: .12em;
+    color: var(--brief-sub);
+    margin-top: 5px;
+}
+
+.nieuwsbrief-form {
+    display: flex;
+    gap: 8px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+}
+
+/* [hidden] verliest het van display:flex hierboven — zonder deze regel
+   blijft het formulier staan na een geslaagde aanmelding. Zelfde valkuil
+   als bij .kb-rij en .kb-zoekbalk. */
+.nieuwsbrief-form[hidden] {
+    display: none;
+}
+
+.nieuwsbrief-form input {
+    flex: 1 1 170px;
+    min-width: 0;
+    background: none;
+    border: none;
+    border-bottom: 1px solid var(--brief-rand);
+    color: var(--brief-tekst);
+    font-family: var(--sans);
+    font-size: 13px;
+    padding: 0 2px;
+    height: 44px;
+}
+
+.nieuwsbrief-form input::placeholder {
+    color: var(--brief-sub);
+    opacity: .75;
+}
+
+.nieuwsbrief-form input:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+.nieuwsbrief-form button {
+    background: var(--accent);
+    color: var(--brief-knop-tekst);
+    border: none;
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 10px;
+    letter-spacing: .13em;
+    padding: 0 18px;
+    height: 44px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.nieuwsbrief-form button[disabled] {
+    opacity: .6;
+    cursor: default;
+}
+
+.nieuwsbrief-bedankt {
+    margin-top: 14px;
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--brief-tekst);
+}
+
+.nieuwsbrief-bedankt[hidden] {
+    display: none;
+}
+
+.nieuwsbrief-fout {
+    margin-top: 10px;
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: .1em;
+    color: var(--brief-sub);
+}
+
+.nieuwsbrief-fout[hidden] {
+    display: none;
+}
+
+/* ---------------------------------------------------------------- paginavoet */
+
+.paginavoet {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-top: 18px;
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 9.5px;
+    letter-spacing: .12em;
+    color: var(--muted);
+}
+
+.paginavoet-links {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.paginavoet a,
+.paginavoet button {
+    background: none;
+    border: none;
+    padding: 0;
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 9.5px;
+    letter-spacing: .12em;
+    color: inherit;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.paginavoet a:hover,
+.paginavoet button:hover {
+    color: var(--accent);
+}
+
+/* ================================================================
+   Kennisbank — overzicht
+   ================================================================ */
+
+.kb-titel {
+    font-size: clamp(33px, 8.2vw, 48px);
+    font-weight: 700;
+    line-height: .95;
+    letter-spacing: -.045em;
+    margin: 0;
+}
+
+.kb-kop {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding: 24px 0 12px;
+}
+
+.kb-kop-meta {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 9.5px;
+    letter-spacing: .13em;
+    line-height: 2;
+    color: var(--muted-2);
+    text-align: right;
+    margin-right: -.13em;
+}
+
+.kb-intro {
+    font-size: clamp(15px, 4vw, 15.5px);
+    line-height: 1.6;
+    margin: 20px 0 0;
+    max-width: 62ch;
+    text-wrap: pretty;
+}
+
+.kb-zoekbalk {
+    display: block;
+}
+
+/* Zonder JavaScript blijft de filterbalk verborgen: hij zou dan een
+   bediening tonen die niets doet. */
+.kb-zoekbalk[hidden] {
+    display: none;
+}
+
+.kb-zoekrij {
+    display: flex;
+    gap: 9px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.kb-zoekveld {
+    flex: 1 1 200px;
+    min-width: 0;
+    background: var(--veld);
+    border: 1px solid var(--rule);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 13px;
+    padding: 0 13px;
+    height: 46px;
+    border-radius: 0;
+}
+
+.kb-zoekveld:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+}
+
+.kb-zoekknop {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--ink);
+    color: var(--bg);
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 10px;
+    letter-spacing: .13em;
+    padding: 0 18px;
+    height: 46px;
+    border: none;
+}
+
+.kb-filters {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(148px, 1fr));
+    gap: 9px;
+    margin-top: 9px;
+}
+
+.kb-filter-label {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 8.5px;
+    letter-spacing: .13em;
+    color: var(--muted);
+    margin-bottom: 4px;
+}
+
+.kb-filter-veld {
+    position: relative;
+}
+
+.kb-filter-veld select {
+    appearance: none;
+    width: 100%;
+    border: 1px solid var(--veld-rand);
+    border-radius: 0;
+    background: var(--veld);
+    height: 40px;
+    padding: 0 26px 0 10px;
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink);
+    cursor: pointer;
+}
+
+.kb-filter-veld select:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+}
+
+.kb-filter-pijl {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 11px;
+    color: var(--muted-4);
+}
+
+.kb-resultaatrij {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+    padding-bottom: 8px;
+}
+
+.kb-telling {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 9.5px;
+    letter-spacing: .13em;
+    color: var(--muted);
+    white-space: nowrap;
+}
+
+.kb-actieve-filters {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-left: auto;
+}
+
+.kb-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    border: 1px solid var(--accent);
+    background: none;
+    color: var(--accent);
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 10px;
+    padding: 4px 8px;
+    cursor: pointer;
+    text-transform: uppercase;
+    border-radius: 0;
+}
+
+.kb-chip-kruis {
+    font-weight: 700;
+    line-height: 1;
+}
+
+.kb-chip-wis {
+    background: none;
+    border: none;
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 10px;
+    color: var(--muted);
+    text-decoration: underline;
+    padding: 4px 2px;
+    cursor: pointer;
+}
+
+.kb-tabelkop {
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 9px;
+    letter-spacing: .14em;
+    color: var(--muted);
+    padding: 9px 0 7px;
+    border-bottom: 1px solid var(--rule);
+}
+
+.kb-tabelkop-wijn {
+    flex: 1 1 210px;
+}
+
+.kb-tabelkop-kwaliteit {
+    width: 96px;
+    text-align: right;
+}
+
+.kb-tabelkop-datum {
+    width: 104px;
+    text-align: right;
+}
+
+.kb-rij {
+    display: flex;
+    width: 100%;
+    gap: 18px;
+    flex-wrap: wrap;
+    align-items: baseline;
+    text-align: left;
+    background: none;
+    border: none;
+    border-bottom: 1px solid var(--lijn-zacht);
+    padding: 13px 0;
+    cursor: pointer;
+    color: inherit;
+    font-family: var(--sans);
+    text-decoration: none;
+}
+
+/* [hidden] verliest het van display:flex — zonder deze regel klopt de
+   teller wel maar blijven alle rijen zichtbaar bij het filteren. */
+.kb-rij[hidden] {
+    display: none;
+}
+
+.kb-rij:hover {
+    background: var(--hover);
+}
+
+.kb-rij-wijn {
+    flex: 1 1 210px;
+    min-width: 0;
+}
+
+.kb-rij-naam {
+    display: block;
+    font-size: clamp(17px, 4.4vw, 19px);
+    font-weight: 600;
+    letter-spacing: -.015em;
+    line-height: 1.25;
+}
+
+.kb-rij-jaargang {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+}
+
+.kb-rij-herkomst {
+    display: block;
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 9.5px;
+    letter-spacing: .05em;
+    color: var(--muted);
+    margin-top: 4px;
+    text-transform: uppercase;
+}
+
+.kb-rij-kwaliteit {
+    width: 96px;
+    text-align: right;
+    margin-left: auto;
+    font-family: var(--mono);
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -.03em;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+}
+
+.kb-rij-kwaliteit .score-suffix {
+    font-size: 10px;
+}
+
+.kb-rij-prijs {
+    width: 104px;
+    text-align: right;
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+
+.kb-rij-beoordeeld {
+    width: 104px;
+    text-align: right;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+}
+
+.kb-meer {
+    background: none;
+    border: 1px solid var(--rule);
+    color: inherit;
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 10px;
+    letter-spacing: .13em;
+    padding: 0 18px;
+    height: 44px;
+    margin-top: 18px;
+    cursor: pointer;
+}
+
+.kb-meer[hidden] {
+    display: none;
+}
+
+.kb-meer:hover {
+    background: var(--ink);
+    color: var(--bg);
+}
+
+.kb-leeg {
+    padding: 26px 0;
+}
+
+.kb-leeg[hidden] {
+    display: none;
+}
+
+.kb-leeg-kop {
+    font-size: 19px;
+    font-weight: 600;
+    letter-spacing: -.015em;
+    line-height: 1.4;
+    margin: 0;
+}
+
+.kb-leeg-tekst {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--muted-2);
+    margin: 6px 0 0;
+    max-width: 52ch;
+}
+
+.kb-leeg-knop {
+    background: none;
+    border: none;
+    padding: 0;
+    margin-top: 12px;
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 10px;
+    letter-spacing: .13em;
+    color: var(--accent);
+    cursor: pointer;
+    border-bottom: 1px solid var(--accent);
+    line-height: 1.9;
+}
+
+/* ================================================================
+   Kennisbank — detailpagina van één wijn
+   ================================================================ */
+
+.wd-kruimel {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 9.5px;
+    letter-spacing: .12em;
+    color: var(--muted);
+    padding: 14px 0 0;
+}
+
+.wd-kruimel a {
+    color: inherit;
+    text-decoration: underline;
+}
+
+.wd-layout {
+    display: flex;
+    gap: clamp(16px, 4vw, 34px);
+    align-items: flex-start;
+    flex-wrap: wrap;
+    padding-top: 20px;
+}
+
+.wd-zijkolom {
+    flex: 0 0 clamp(120px, 30vw, 186px);
+}
+
+.wd-foto {
+    width: 100%;
+    height: clamp(220px, 54vw, 340px);
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.wd-foto img,
+.wd-foto svg {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    object-position: bottom;
+}
+
+.wd-scoreblok {
+    border-top: 2px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    padding: 11px 0;
+    margin-top: 16px;
+    text-align: center;
+}
+
+.wd-score {
+    font-family: var(--mono);
+    font-size: clamp(40px, 10vw, 56px);
+    font-weight: 700;
+    letter-spacing: -.05em;
+    line-height: .95;
+    font-variant-numeric: tabular-nums;
+}
+
+.wd-score .score-suffix {
+    font-size: .3em;
+}
+
+.wd-score-label {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 8.5px;
+    letter-spacing: .15em;
+    color: var(--muted);
+    margin-top: 7px;
+}
+
+.wd-score-noot {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 9.5px;
+    letter-spacing: .06em;
+    color: var(--muted);
+    margin-top: 12px;
+    line-height: 1.7;
+    text-align: center;
+}
+
+.wd-hoofd {
+    flex: 1 1 280px;
+    min-width: 0;
+}
+
+.wd-herkomst {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 9.5px;
+    letter-spacing: .15em;
+    color: var(--accent);
+}
+
+.wd-naam {
+    font-size: clamp(28px, 7vw, 42px);
+    line-height: 1.08;
+    letter-spacing: -.04em;
+    margin: 9px 0 0;
+    font-weight: 700;
+    text-wrap: pretty;
+}
+
+.wd-velden {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 20px;
+    margin-top: 16px;
+    padding: 13px 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--lijn-zacht);
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 10.5px;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+}
+
+.wd-veld {
+    color: var(--muted);
+}
+
+.wd-veld-waarde {
+    color: var(--ink);
+    font-weight: 700;
+}
+
+.wd-veld-waarde.cijfers {
+    font-family: var(--mono);
+    letter-spacing: 0;
+    font-variant-numeric: tabular-nums;
+}
+
+.wd-bronnen {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px 26px;
+    margin-top: 16px;
+}
+
+.wd-bron {
+    display: flex;
+    flex-direction: column;
+}
+
+.wd-bron-label {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 9px;
+    letter-spacing: .13em;
+    color: var(--muted);
+}
+
+.wd-bron-waarde {
+    font-family: var(--mono);
+    font-size: 21px;
+    font-weight: 700;
+    letter-spacing: -.03em;
+    line-height: 1.15;
+    font-variant-numeric: tabular-nums;
+}
+
+.wd-bron-basis {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 9px;
+    color: var(--muted-3);
+}
+
+.wd-lead {
+    font-size: clamp(17px, 4.4vw, 20px);
+    font-weight: 500;
+    line-height: 1.55;
+    letter-spacing: -.01em;
+    margin: 22px 0 0;
+    text-wrap: pretty;
+}
+
+.wd-sectiekop {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 24px 0 0;
+}
+
+.wd-sectiekop-ruim {
+    margin: 28px 0 0;
+}
+
+.wd-sectiekop-label {
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 9.5px;
+    letter-spacing: .15em;
+    white-space: nowrap;
+}
+
+.wd-sectiekop-lijn {
+    flex: 1;
+    height: 1px;
+    background: var(--lijn);
+}
+
+.wd-onderbouwing {
+    font-size: clamp(14.5px, 3.9vw, 15.5px);
+    line-height: 1.68;
+    margin: 14px 0 0;
+    max-width: 60ch;
+    text-wrap: pretty;
+}
+
+.wd-prijsblok {
+    border: 1px solid var(--rule);
+    margin-top: 24px;
+    padding: 17px 18px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.wd-prijsblok-tekst {
+    flex: 1 1 240px;
+    min-width: 0;
+}
+
+.wd-prijs-label {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 9px;
+    letter-spacing: .15em;
+    color: var(--muted);
+}
+
+.wd-prijs-rij {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 5px;
+}
+
+.wd-prijs {
+    font-family: var(--mono);
+    font-size: clamp(23px, 5.8vw, 26px);
+    font-weight: 700;
+    letter-spacing: -.02em;
+    font-variant-numeric: tabular-nums;
+}
+
+.wd-prijs-context {
+    font-size: 13.5px;
+    color: var(--muted-2);
+}
+
+.wd-prijs-noot {
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--muted-2);
+    margin-top: 7px;
+    max-width: 46ch;
+}
+
+.wd-bestel-knop {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--ink);
+    color: var(--bg);
+    text-decoration: none;
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .13em;
+    padding: 0 18px;
+    height: 46px;
+    white-space: nowrap;
+    flex: none;
+    transition: background .15s;
+}
+
+.wd-bestel-knop:hover,
+.wd-bestel-knop:focus-visible {
+    background: var(--accent);
+    color: var(--bg);
+}
+
+.wd-vergelijkbaar-rij {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding: 11px 0;
+    border-bottom: 1px solid var(--lijn-zacht);
+    text-decoration: none;
+    color: inherit;
+}
+
+.wd-vergelijkbaar-rij:hover {
+    background: var(--hover);
+}
+
+.wd-vergelijkbaar-wijn {
+    flex: 1 1 180px;
+    min-width: 0;
+}
+
+.wd-vergelijkbaar-naam {
+    display: block;
+    font-size: 15.5px;
+    font-weight: 600;
+    letter-spacing: -.01em;
+    line-height: 1.3;
+}
+
+.wd-vergelijkbaar-herkomst {
+    display: block;
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 9.5px;
+    letter-spacing: .05em;
+    color: var(--muted);
+    margin-top: 3px;
+    text-transform: uppercase;
+}
+
+.wd-vergelijkbaar-score {
+    width: 74px;
+    text-align: right;
+    margin-left: auto;
+    font-family: var(--mono);
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: -.03em;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+.wd-vergelijkbaar-score .score-suffix {
+    font-size: .62em;
+}
+
+.wd-vergelijkbaar-prijs {
+    width: 88px;
+    text-align: right;
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+/* ================================================================
+   Feedbackvenster
+   ================================================================ */
+
+.feedback-overlay {
+    position: fixed;
+    inset: 0;
+    background: oklch(0% 0 0 / .5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 50;
+}
+
+/* [hidden] verliest het van display:flex — zonder deze regel staat het
+   feedbackvenster op élke pagina permanent open. */
+.feedback-overlay[hidden] {
+    display: none;
+}
+
+.feedback-venster {
+    background: var(--bg);
+    color: var(--ink);
+    border: 1px solid var(--rule);
+    max-width: 460px;
+    width: 100%;
+    padding: 22px;
+}
+
+.feedback-kop {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -.02em;
+    margin: 0;
+}
+
+.feedback-tekst {
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--muted-2);
+    margin: 7px 0 0;
+}
+
+.feedback-veld {
+    width: 100%;
+    margin-top: 14px;
+    background: var(--veld);
+    border: 1px solid var(--veld-rand);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 13px;
+    padding: 10px 12px;
+    min-height: 110px;
+    resize: vertical;
+    border-radius: 0;
+}
+
+.feedback-veld:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+}
+
+.feedback-knoppen {
+    display: flex;
+    gap: 8px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+}
+
+.feedback-verstuur {
+    background: var(--ink);
+    color: var(--bg);
+    border: none;
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 10px;
+    letter-spacing: .13em;
+    padding: 0 18px;
+    height: 44px;
+    cursor: pointer;
+}
+
+.feedback-verstuur[disabled] {
+    opacity: .6;
+    cursor: default;
+}
+
+.feedback-annuleer {
+    background: none;
+    border: 1px solid var(--veld-rand);
+    color: inherit;
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: .13em;
+    padding: 0 18px;
+    height: 44px;
+    cursor: pointer;
+}
+
+.feedback-bedankt {
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+.feedback-bedankt[hidden] {
+    display: none;
+}
+
+.feedback-formulier[hidden] {
+    display: none;
+}
