@@ -652,10 +652,17 @@ a {
 
 /* ---------------------------------------------------------------- overige aanraders */
 
+/* Kolomkop en rijen delen ALTIJD hetzelfde grid-template. Dit was flexbox met flex-wrap en
+   vaste 88px-cellen; dat lijnt netjes uit zolang alles op één regel past, maar zodra een lange
+   wijnnaam de rij laat wrappen belanden WAS en NU op een tweede regel terwijl hun kolomkop
+   boven de eerste blijft staan. De prijzen zweefden dan los onder de naam. Een grid kan per
+   definitie niet wrappen: vier cellen, vier kolommen, koppen en waarden altijd in dezelfde
+   verticaal. Wijzig je het aantal kolommen, wijzig het dan op BEIDE plekken. */
 .overig-kop {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 88px 88px 88px;
     gap: 16px;
-    flex-wrap: wrap;
+    align-items: baseline;
     font-family: var(--sans);
     font-weight: 600;
     font-size: 9px;
@@ -666,7 +673,7 @@ a {
 }
 
 .overig-kop-wijn {
-    flex: 1 1 200px;
+    min-width: 0;
 }
 
 .overig-kop-getal {
@@ -675,10 +682,10 @@ a {
 }
 
 .overig-rij {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 88px 88px 88px;
     align-items: baseline;
     gap: 16px;
-    flex-wrap: wrap;
     padding: 11px 0;
     border-bottom: 1px solid var(--lijn-zacht);
     text-decoration: none;
@@ -690,7 +697,7 @@ a {
 }
 
 .overig-naam {
-    flex: 1 1 200px;
+    min-width: 0;
     font-size: 14.5px;
     line-height: 1.35;
 }
@@ -704,12 +711,10 @@ a {
 }
 
 .overig-score {
-    width: 88px;
     text-align: right;
     font-family: var(--mono);
     font-size: 11.5px;
     font-variant-numeric: tabular-nums;
-    margin-left: auto;
 }
 
 .overig-score-suffix {
@@ -717,7 +722,6 @@ a {
 }
 
 .overig-was {
-    width: 88px;
     text-align: right;
     font-family: var(--mono);
     font-size: 11px;
@@ -727,7 +731,6 @@ a {
 }
 
 .overig-nu {
-    width: 88px;
     text-align: right;
     font-family: var(--mono);
     font-size: 13px;
@@ -1821,6 +1824,30 @@ a {
    te vullen). 600px geeft daar ruim marge boven, zonder de tabletweergave te raken - vanaf
    680px+ is er in de responsive-tests (768/1024/1280px) nooit een afwijking gemeten. */
 @media (max-width: 600px) {
+    /* Vier kolommen passen niet op 390px. Zelfde oplossing als bij .kb-tabelkop hieronder: de
+       kolomkop verdwijnt en de rij wordt twee regels - naam met score erachter, prijzen eronder.
+       Met grid-template-areas ligt vast WAAR elke cel landt; bij het oude flex-wrap bepaalde de
+       lengte van de wijnnaam dat, en dat was precies het zweefgedrag. */
+    .overig-kop {
+        display: none;
+    }
+
+    .overig-rij {
+        grid-template-columns: 1fr auto;
+        row-gap: 5px;
+        column-gap: 12px;
+    }
+
+    /* Twee regels, twee kolommen. Regel 1 is de naam met de score erachter, regel 2 het
+       prijspaar. De van-prijs staat in kolom 1 maar met justify-self:end tegen de rechterrand
+       daarvan, dus pal naast de voor-prijs in kolom 2 - ze lezen als één paar ("was X, nu Y")
+       in plaats van als twee losse kolommen aan weerszijden van de rij. Alleen de column-gap
+       zit ertussen. */
+    .overig-naam  { grid-column: 1; grid-row: 1; }
+    .overig-score { grid-column: 2; grid-row: 1; }
+    .overig-was   { grid-column: 1; grid-row: 2; justify-self: end; }
+    .overig-nu    { grid-column: 2; grid-row: 2; }
+
     /* Het ontwerp herhaalt op mobiel geen kolomkoppen boven de rij - LAATST GEZIEN en
        BEOORDEELD staan ipv daarvan als label vóór de waarde zelf, zie .kb-rij-label. */
     .kb-tabelkop {
@@ -1897,6 +1924,27 @@ a {
     .wd-velden {
         flex-direction: column;
         gap: 3px;
+    }
+
+    /* Uitzondering voor een waarde die niet naast zijn label past, in de praktijk een
+       druivenlijst van meer dan twee of drie rassen. Label links / waarde rechts levert dan een
+       blok van twee regels op met een rafelige linkerkant, dat niet meer uitlijnt met KLEUR en
+       PRODUCENT eromheen. Hier gaat het label daarom bóven de waarde staan en krijgt de waarde
+       de volle breedte, links uitgelijnd - dan wrapt hij netjes onder zichzelf. De modifier
+       wordt gezet in _velden_html() in genereer_kennisbank_b.py (_LANGE_WAARDE). */
+    /* Compound selector (.wd-veld.wd-veld--lang), niet los .wd-veld--lang: de generieke
+       .wd-veld-regel hieronder heeft dezelfde specificiteit en staat later in het bestand, dus
+       die zou anders winnen met display:flex. */
+    .wd-veld.wd-veld--lang {
+        display: block;
+        margin: 3px 0;
+    }
+
+    .wd-veld.wd-veld--lang > .wd-veld-waarde {
+        display: block;
+        margin-top: 2px;
+        text-align: left;
+        line-height: 1.45;
     }
 
     .wd-veld {
