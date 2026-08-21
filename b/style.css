@@ -1255,6 +1255,20 @@ a {
     font-variant-numeric: tabular-nums;
 }
 
+/* .kb-rij-datums is op desktop onzichtbaar als eigen element: display:contents laat de twee
+   kinderen (prijs/beoordeeld) meedoen als rechtstreekse flex-items van .kb-rij, precies zoals
+   vóór deze wrapper. Bestaat alleen zodat de media query hieronder ze als koppel kan behandelen
+   zonder de desktop-opmaak aan te raken. */
+.kb-rij-datums {
+    display: contents;
+}
+
+/* Alleen zichtbaar op mobiel (zie media query onderaan) - op desktop staan LAATST GEZIEN en
+   BEOORDEELD al als kolomkop boven de waarde, een tweede label ernaast zou dubbelop zijn. */
+.kb-rij-label {
+    display: none;
+}
+
 .kb-meer {
     background: none;
     border: 1px solid var(--rule);
@@ -1794,4 +1808,100 @@ a {
 
 .feedback-formulier[hidden] {
     display: none;
+}
+
+/* ------------------------------------------------------------ mobiel (<=600px)
+   Eerste breedte-gebonden media query in dit bestand - de rest van de site redt zich met
+   clamp()/flex-wrap. Voor deze twee onderdelen (kennisbanktabel, wijndetail-fotokolom) bestaat
+   in het ontwerp zelf een losse MOBIEL 390-tekening met een ANDERE indeling, geen kleinere
+   versie van dezelfde indeling - dus hoort hier een echte breekpunt, geen verdere clamp().
+   Drempel gemeten (21 augustus 2026): de vloeiende .wd-layout wisselt vanzelf van naast-elkaar
+   naar onder-elkaar tussen 480px en 495px content-breedte, met een leeg vlak rechts van de foto
+   tot gevolg (.wd-zijkolom krijgt daarbij flex-shrink:0 een eigen regel maar geen breedte om ze
+   te vullen). 600px geeft daar ruim marge boven, zonder de tabletweergave te raken - vanaf
+   680px+ is er in de responsive-tests (768/1024/1280px) nooit een afwijking gemeten. */
+@media (max-width: 600px) {
+    /* Het ontwerp herhaalt op mobiel geen kolomkoppen boven de rij - LAATST GEZIEN en
+       BEOORDEELD staan ipv daarvan als label vóór de waarde zelf, zie .kb-rij-label. */
+    .kb-tabelkop {
+        display: none;
+    }
+
+    .kb-rij {
+        row-gap: 8px;
+    }
+
+    .kb-rij-datums {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .kb-rij-prijs,
+    .kb-rij-beoordeeld {
+        width: auto;
+        text-align: left;
+        font-size: 11px;
+    }
+
+    .kb-rij-label {
+        display: inline;
+        font-family: var(--sans);
+        font-weight: 600;
+        font-size: 9px;
+        letter-spacing: .1em;
+        color: var(--muted);
+        margin-right: 5px;
+    }
+
+    /* Foto en scoreblok staan in het ontwerp op mobiel NAAST elkaar (vaste fotobreedte,
+       scoreblok vult de rest), niet onder elkaar zoals op desktop - vandaar de eigen flex-
+       richting hier in plaats van een kleinere versie van .wd-zijkolom. Alles daaronder
+       (herkomst, naam, velden, bronnen, prijsblok, onderbouwing) blijft simpelweg vollebreedte
+       onder deze rij, wat met flex-direction:column vanzelf gebeurt. */
+    .wd-layout {
+        flex-direction: column;
+    }
+
+    .wd-zijkolom {
+        display: flex;
+        align-items: flex-end;
+        gap: 14px;
+        width: 100%;
+        flex: none;
+    }
+
+    .wd-foto {
+        width: 104px;
+        height: 210px;
+        flex: none;
+    }
+
+    .wd-scoreblok {
+        flex: 1;
+        margin-top: 0;
+    }
+
+    .wd-score {
+        font-size: 48px;
+    }
+
+    /* Het ontwerp toont deze toelichting op mobiel niet - ruimte is daar schaarser en de
+       kop "ONZE KWALITEITSSCORE" zegt al dat het om de wijn gaat, niet de prijs. */
+    .wd-score-noot {
+        display: none;
+    }
+
+    /* Twee-per-regel (desktop) wordt één-per-regel, label links/waarde rechts - dezelfde
+       .wd-veld-markup, alleen de richting van de flex-container verandert. */
+    .wd-velden {
+        flex-direction: column;
+        gap: 3px;
+    }
+
+    .wd-veld {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+    }
 }
