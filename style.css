@@ -2160,10 +2160,17 @@ a {
         row-gap: 8px;
     }
 
+    /* Het prijsregeltje wipt als geheel naar de tweede regel, maar begint niet onder het
+       flesje: het springt in tot onder de wijnnaam, zodat prijs en herkomstregel dezelfde
+       linkerkantlijn hebben. De inspring is de fleskolom (34px) plus de kolomafstand van
+       .wa-rij (18px); de breedte trekt datzelfde er weer af, anders loopt de regel er aan de
+       rechterkant net zo ver overheen. */
     .wa-rij-datums {
         display: flex;
         justify-content: space-between;
-        width: 100%;
+        flex: none;
+        margin-left: calc(34px + 18px);
+        width: calc(100% - 34px - 18px);
     }
 
     .wa-rij-prijs,
