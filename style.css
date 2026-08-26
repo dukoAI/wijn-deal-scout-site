@@ -1435,8 +1435,13 @@ a {
     border-bottom: 1px solid var(--rule);
 }
 
+.wa-tabelkop-fles {
+    width: 34px;
+    flex: none;
+}
+
 .wa-tabelkop-wijn {
-    flex: 1 1 210px;
+    flex: 1 1 190px;
 }
 
 .wa-tabelkop-kwaliteit {
@@ -1476,8 +1481,25 @@ a {
     background: var(--hover);
 }
 
+/* Vaste breedte en vaste hoogte, ook als er geen icoon is (geen type = geen kleur = geen
+   fles): het vak houdt de kolom op maat, precies zoals het fotovak op de wijnpagina. */
+.wa-rij-fles {
+    width: 34px;
+    flex: none;
+    height: 46px;
+    align-self: center;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.wa-rij-fles img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
 .wa-rij-wijn {
-    flex: 1 1 210px;
+    flex: 1 1 190px;
     min-width: 0;
 }
 
@@ -1487,13 +1509,6 @@ a {
     font-weight: 600;
     letter-spacing: -.015em;
     line-height: 1.25;
-}
-
-.wa-rij-jaargang {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--muted);
-    font-variant-numeric: tabular-nums;
 }
 
 .wa-rij-herkomst {
@@ -1532,7 +1547,7 @@ a {
     font-variant-numeric: tabular-nums;
 }
 
-.wa-rij-beoordeeld {
+.wa-rij-gepeild {
     width: 104px;
     text-align: right;
     font-family: var(--mono);
@@ -1549,8 +1564,8 @@ a {
     display: contents;
 }
 
-/* Alleen zichtbaar op mobiel (zie media query onderaan) - op desktop staan LAATST GEZIEN en
-   BEOORDEELD al als kolomkop boven de waarde, een tweede label ernaast zou dubbelop zijn. */
+/* Alleen zichtbaar op mobiel (zie media query onderaan) - op desktop staan PRIJS en
+   PRIJS GEPEILD al als kolomkop boven de waarde, een tweede label ernaast zou dubbelop zijn. */
 .wa-rij-label {
     display: none;
 }
@@ -2127,8 +2142,8 @@ a {
         justify-content: flex-end;
     }
 
-    /* Het ontwerp herhaalt op mobiel geen kolomkoppen boven de rij - LAATST GEZIEN en
-       BEOORDEELD staan ipv daarvan als label vóór de waarde zelf, zie .wa-rij-label. */
+    /* Het ontwerp herhaalt op mobiel geen kolomkoppen boven de rij - PRIJS en PRIJS GEPEILD
+       staan ipv daarvan als label vóór de waarde zelf, zie .wa-rij-label. */
     .wa-tabelkop {
         display: none;
     }
@@ -2144,7 +2159,7 @@ a {
     }
 
     .wa-rij-prijs,
-    .wa-rij-beoordeeld {
+    .wa-rij-gepeild {
         width: auto;
         text-align: left;
         font-size: 11px;
