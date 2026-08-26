@@ -925,6 +925,14 @@ a {
     justify-content: center;
 }
 
+/* Geldt voor de flesfoto én voor het icoon dat ervoor in de plaats komt. Zonder deze regel
+   neemt een <img> met een SVG erin zijn eigen afmeting (240x720, dus 20x60 bij een vak van
+   20 breed) en steekt het icoon 8px boven de rij uit. */
+.overig-fles img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
 .overig-kop-wijn,
 .overig-naam {
     flex: 1;
